@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="#fffafafa" android:fitsSystemWindows="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout android:paddingTop="16.0dip" android:paddingBottom="8.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="18.0sp" android:textColor="#ff333333" android:id="@id/show_date" android:paddingLeft="20.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/year_and_month" />
+        <ImageView android:layout_gravity="right" android:id="@id/replan_click" android:background="@drawable/reflection" android:layout_width="24.0dip" android:layout_height="24.0dip" android:layout_marginRight="20.0dip" />
+    </FrameLayout>
+    <android.support.design.widget.CoordinatorLayout android:background="#fffafafa" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:background="#fffafafa" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <com.haibin.calendarview.CalendarLayout android:orientation="vertical" android:id="@id/calendarLayout" android:background="#fffafafa" android:layout_width="fill_parent" android:layout_height="fill_parent" app:default_status="shrink">
+                <com.haibin.calendarview.CalendarView android:id="@id/calendarView" android:layout_width="fill_parent" android:layout_height="wrap_content" app:calendar_height="40.0dip" app:calendar_padding="10.0dip" app:current_day_text_color="#ff8bc5a1" app:current_month_text_color="#ff333333" app:day_text_size="14.0sp" app:max_year="2100" app:min_year="2004" app:month_view="www.littlefoxes.reftime.RePlanViewHelper.MyMonthView" app:month_view_show_mode="mode_only_current" app:other_month_text_color="#ffe1e1e1" app:selected_text_color="#ffffffff" app:selected_theme_color="#ff8bc5a1" app:week_background="#fffafafa" app:week_start_with="sun" app:week_text_color="#ff999999" app:week_text_size="14.0sp" app:week_view="www.littlefoxes.reftime.RePlanViewHelper.MyWeekView" app:week_view_scrollable="true" app:year_view_day_text_color="#ff333333" app:year_view_day_text_size="9.0sp" app:year_view_month_text_color="#ff8bc5a1" app:year_view_month_text_size="20.0sp" app:year_view_scheme_color="#fff17706" />
+                <View android:layout_gravity="center" android:background="#ffeeeeee" android:layout_width="fill_parent" android:layout_height="1.0dip" android:layout_marginTop="4.0dip" />
+                <LinearLayout android:orientation="horizontal" android:id="@id/recyclerView" android:background="#fffafafa" android:layout_width="fill_parent" android:layout_height="fill_parent" android:weightSum="6.1">
+                    <www.littlefoxes.reftime.RePlanViewHelper.MyRePlanView android:id="@id/my_re_plan_view" android:background="#fffafafa" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_marginTop="10.0dip" android:layout_weight="3.6" />
+                    <View android:background="#ffeeeeee" android:layout_width="1.0dip" android:layout_height="fill_parent" />
+                    <LinearLayout android:orientation="vertical" android:background="#ffffffff" android:paddingTop="10.0dip" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="2.5">
+                        <FrameLayout android:orientation="horizontal" android:paddingBottom="9.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                            <TextView android:textSize="16.0sp" android:textColor="#ff8bc5a1" android:layout_gravity="left" android:id="@id/cancel_add_plan" android:paddingLeft="9.0dip" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/Cancel" />
+                            <TextView android:textSize="16.0sp" android:textColor="#ff8bc5a1" android:layout_gravity="right" android:id="@id/certain_add_plan" android:paddingRight="9.0dip" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/add_plan" />
+                        </FrameLayout>
+                        <android.support.v4.widget.NestedScrollView android:id="@id/scroll_view" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                            <LinearLayout android:orientation="vertical" android:id="@id/add_edit_plan" android:background="#ffebebeb" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                                <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="16.0dip" android:text="@string/time" />
+                                <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="14.0dip" android:weightSum="2.0">
+                                    <LinearLayout android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0">
+                                        <TextView android:textSize="14.0sp" android:textColor="#ff333333" android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/start" />
+                                        <www.littlefoxes.reftime.RePlanViewHelper.MyTimePickView android:id="@id/time_picker_start" android:background="@drawable/week_btn_bg" android:layout_width="fill_parent" android:layout_height="80.0dip" android:layout_marginLeft="10.0dip" android:layout_marginTop="8.0dip" android:layout_marginRight="8.0dip" />
+                                    </LinearLayout>
+                                    <LinearLayout android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0">
+                                        <TextView android:textSize="14.0sp" android:textColor="#ff333333" android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/stop" />
+                                        <www.littlefoxes.reftime.RePlanViewHelper.MyTimePickView android:id="@id/time_picker_stop" android:background="@drawable/week_btn_bg" android:layout_width="fill_parent" android:layout_height="80.0dip" android:layout_marginLeft="8.0dip" android:layout_marginTop="8.0dip" android:layout_marginRight="10.0dip" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                                <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="16.0dip">
+                                    <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:text="@string/period" />
+                                    <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="14.0dip" android:layout_marginRight="10.0dip">
+                                        <TextView android:textSize="14.0sp" android:textColor="#ff333333" android:gravity="center" android:layout_gravity="left" android:id="@id/one_btn" android:background="@drawable/week_btn_bg" android:layout_width="@dimen/cycle_btn_width" android:layout_height="@dimen/cycle_btn_width" android:text="@string/mon" />
+                                        <TextView android:textSize="14.0sp" android:textColor="#ff333333" android:gravity="center" android:layout_gravity="center" android:id="@id/two_btn" android:background="@drawable/week_btn_bg" android:layout_width="@dimen/cycle_btn_width" android:layout_height="@dimen/cycle_btn_width" android:text="@string/tue" />
+                                        <TextView android:textSize="14.0sp" android:textColor="#ff333333" android:gravity="center" android:layout_gravity="right" android:id="@id/three_btn" android:background="@drawable/week_btn_bg" android:layout_width="@dimen/cycle_btn_width" android:layout_height="@dimen/cycle_btn_width" android:text="@string/wed" />
+                                    </FrameLayout>
+                                    <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip">
+                                        <TextView android:textSize="14.0sp" android:textColor="#ff333333" android:gravity="center" android:layout_gravity="left" android:id="@id/four_btn" android:background="@drawable/week_btn_bg" android:layout_width="@dimen/cycle_btn_width" android:layout_height="@dimen/cycle_btn_width" android:text="@string/thu" />
+                                        <TextView android:textSize="14.0sp" android:textColor="#ff333333" android:gravity="center" android:layout_gravity="center" android:id="@id/five_btn" android:background="@drawable/week_btn_bg" android:layout_width="@dimen/cycle_btn_width" android:layout_height="@dimen/cycle_btn_width" android:text="@string/fri" />
+                                        <TextView android:textSize="14.0sp" android:textColor="#ff333333" android:gravity="center" android:layout_gravity="right" android:id="@id/six_btn" android:background="@drawable/week_btn_bg" android:layout_width="@dimen/cycle_btn_width" android:layout_height="@dimen/cycle_btn_width" android:text="@string/sat" />
+                                    </FrameLayout>
+                                    <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip">
+                                        <TextView android:textSize="14.0sp" android:textColor="#ff333333" android:gravity="center" android:layout_gravity="left" android:id="@id/seven_btn" android:background="@drawable/week_btn_bg" android:layout_width="@dimen/cycle_btn_width" android:layout_height="@dimen/cycle_btn_width" android:text="@string/sun" />
+                                        <TextView android:textSize="14.0sp" android:textColor="#ffffffff" android:gravity="center" android:layout_gravity="center" android:id="@id/none_btn" android:background="@drawable/week_btn_bg_checked" android:layout_width="@dimen/cycle_btn_width" android:layout_height="@dimen/cycle_btn_width" android:text="@string/none" />
+                                    </FrameLayout>
+                                </LinearLayout>
+                                <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="16.0dip" android:layout_marginRight="10.0dip">
+                                    <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="14.0dip" android:text="@string/activity" />
+                                    <android.support.v7.widget.RecyclerView android:id="@id/add_plan_rv" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </android.support.v4.widget.NestedScrollView>
+                        <LinearLayout android:orientation="vertical" android:id="@id/show_plan_detail" android:background="#fffafafa" android:paddingLeft="10.0dip" android:paddingTop="18.0dip" android:paddingRight="10.0dip" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                                <TextView android:textSize="14.0sp" android:textColor="#ff000000" android:id="@id/plan_detail_unicode" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                                <TextView android:textSize="16.0sp" android:textColor="#ff333333" android:ellipsize="end" android:id="@id/plan_detail_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/make_music" android:maxLines="1" />
+                            </LinearLayout>
+                            <LinearLayout android:orientation="horizontal" android:paddingTop="16.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                                <TextView android:textSize="14.0sp" android:textColor="#ff666666" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/time_for_dit" />
+                                <TextView android:textSize="14.0sp" android:textColor="#ff999999" android:id="@id/plan_detail_time" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="13:00-13:35" />
+                            </LinearLayout>
+                            <LinearLayout android:orientation="horizontal" android:paddingTop="14.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                                <TextView android:textSize="14.0sp" android:textColor="#ff666666" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/period_for_edit" />
+                                <TextView android:textSize="14.0sp" android:textColor="#ff999999" android:id="@id/plan_detail_cycle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tue_and_thu" android:maxEms="4" />
+                            </LinearLayout>
+                            <TextView android:textSize="16.0sp" android:textColor="#ffff5a5a" android:gravity="center" android:layout_gravity="center" android:id="@id/delete_plan" android:background="@drawable/week_btn_bg" android:layout_width="124.0dip" android:layout_height="36.0dip" android:layout_marginTop="40.0dip" android:text="@string/delee_plan" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.haibin.calendarview.CalendarLayout>
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

@@ -1,0 +1,2682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VIS</title>
+    <script src="../static/jquery-1.11.0.min.js"></script>
+    <script src="../static/echarts.min.js"></script>
+    <script src="../static/vue.js"></script>
+    <script src="../static/index.js"></script>
+    <link rel="stylesheet" href="../static/index.css">
+    <!--    <script src="https://unpkg.com/element-ui@2.15.5/lib/index.js"></script>-->
+    <!--    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.5/lib/theme-chalk/index.css"></link>-->
+    <script src="../static/en.js"></script>
+    <script src="../static/vuecodemirror.min.js"></script>
+    <script src="../static/date.format.js"></script>
+    <script src="../static/codemirror/codemirror-5.62.2/lib/codemirror.js"></script>
+    <script src="../static/codemirror/codemirror-5.62.2/mode/javascript/javascript.js"></script>
+    <script src="../static/codemirror/codemirror-5.62.2/mode/groovy/groovy.js"></script>
+    <script src="../static/codemirror/codemirror-5.62.2/mode/clike/clike.js"></script>
+    <script src="../static/codemirror/codemirror-5.62.2/mode/vue/vue.js"></script>
+    <link rel="stylesheet" href="../static/codemirror/codemirror-5.62.2/theme/xq-light.css">
+    <link rel="stylesheet" href="../static/codemirror/codemirror-5.62.2/lib/codemirror.css">
+    <!-- Codemirror JS Vue -->
+    <script src="../static/vue-codemirror.js"></script>
+    <!-- Codemirror Libs -->
+    <script src="../static/codemirror/codemirror-5.62.2/addon/selection/active-line.js"></script>
+    <script src="../static/codemirror/codemirror-5.62.2/addon/edit/matchbrackets.js"></script>
+    <!-- Google diff match patch -->
+    <script>
+        window.DIFF_DELETE = -1
+        window.DIFF_INSERT = 1
+        window.DIFF_EQUAL = 0
+    </script>
+    <!-- Include stylesheet -->
+</head>
+<style>
+    body {
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        margin: 0px;
+    }
+
+    #header-container {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        box-sizing: border-box;
+        background-color: #3c3f41;
+        /*color: #769fb8;*/
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+        font-family: "system-ui", Courier, monospace;
+        font-size: xx-large;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        align-items: center;
+    }
+
+    #header {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        box-sizing: border-box;
+        background-color: #3c3f41;
+        /*color: #769fb8;*/
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+        font-family: "system-ui", Courier, monospace;
+        font-size: xx-large;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        align-items: center;
+        z-index: 11;
+    }
+
+    .el-icon-s-unfold {
+        color: #848484;
+        margin: 10px;
+        transition: color .15s linear;
+        font-size: 20px;
+        -webkit-font-smoothing: antialiased;
+        cursor: pointer;
+    }
+
+    #header-text {
+        display: flex;
+        box-sizing: border-box;
+        background-color: #3c3f41;
+        color: #ffffff;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+        font-family: "system-ui", Courier, monospace;
+        font-size: 20px;
+        margin: 5px;
+    }
+
+    #uid-str {
+        margin-left: auto;
+        text-align: right;
+        color: #ababab;
+        font-family: "system-ui", Courier, monospace;
+        font-size: 17px;
+        padding: 10px;
+    }
+
+    #container {
+        width: 100%;
+        height: calc(100% - 50px);
+        display: flex;
+        box-sizing: border-box;
+        /*background: #eaeaea;*/
+    }
+
+    .el-drawer {
+        background-color: #5d6366;
+        z-index: 8;
+        padding-top: 50px;
+    }
+
+    .el-drawer__wrapper {
+    }
+
+    .top-bar {
+        background-color: black;
+        color: white;
+        height: 20px;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+        font-family: "Courier New", Courier, monospace;
+    }
+
+    #left-bar {
+        height: 100%;
+        width: 20%;
+        padding: 5px;
+        box-sizing: border-box;
+        z-index: 10;
+        display: none;
+        position: absolute;
+    }
+
+    #mid {
+        height: 100%;
+        width: 40%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+    #mid2 {
+        height: 100%;
+        width: 60%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+    #right-bar {
+        height: 100%;
+        width: 40%;
+        padding: 5px;
+        box-sizing: border-box;
+        display: none;
+    }
+
+    #right2-bar {
+        height: 100%;
+        width: 20%;
+        padding: 5px;
+        box-sizing: border-box;
+        display: none;
+    }
+
+    #left-top-bar {
+        background-color: white;
+        color: black;
+        height: 20px;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+        font-family: "Courier New", Courier, monospace;
+    }
+
+    #left-top1 {
+        height: calc(25% - 12.5px);
+        border: solid 1px rgba(255, 255, 255, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+        overflow: revert;
+    }
+
+    #left-top2 {
+        height: calc(25% - 12.5px);
+        border: solid 1px rgba(255, 255, 255, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    #left-bottom1 {
+        height: calc(30% - 12.5px);
+        border: solid 1px rgba(255, 255, 255, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #left-bottom2 {
+        height: calc(20% - 12.5px);
+        border: solid 1px rgba(255, 255, 255, 0.3);
+        box-sizing: border-box;
+        box-sizing: border-box;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    #mid-top {
+        height: calc(70% - 10px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #mid-bottom {
+        height: calc(30% - 10px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    #mid2-top {
+        height: calc(40% - 10px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+        display: flex;
+    }
+
+    #mid2-bottom {
+        height: calc(60% - 10px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+        overflow: hidden;
+        display: flex;
+    }
+
+    #right-top {
+        height: calc(0% - 0px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #right-top2 {
+        height: calc(0% - 0px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #right-bottom {
+        height: calc(100% - 20px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+
+    #right2-top {
+        height: calc(25% - 5px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #right2-bottom {
+        height: calc(25% - 5px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #right2-bottom2 {
+        height: calc(25% - 5px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #right2-bottom3 {
+        height: calc(25% - 5px);
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #search-date {
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+    }
+
+    #status-table {
+        padding: 5px;
+        height: calc(100% - 5px);
+    }
+
+    #status-table .el-table .warning-row {
+        background: oldlace;
+    }
+
+    #status-table .el-table .success-row {
+        background: #f0f9eb;
+    }
+
+    #ope-table {
+        padding: 0px 5px 5px 5px;
+        height: 100%;
+    }
+
+    #ope-table .el-table__body-wrapper {
+        background: #5d6366;
+    }
+
+    #ope-table .el-table .warning-row {
+        background: oldlace;
+    }
+
+    #ope-table .el-table .success-row {
+        background: #f0f9eb;
+    }
+
+    #ope-table .el-table th {
+        padding: 0;
+    }
+
+    #ope-table .el-table td {
+        padding: 0;
+    }
+
+    #dev-table {
+        padding: 0px 5px 5px 5px;
+        height: 100%;
+    }
+
+    #dev-table .el-table__body-wrapper {
+        background: #5d6366;
+    }
+
+    #dev-table .el-table .warning-row {
+        background: oldlace;
+    }
+
+    #dev-table .el-table .success-row {
+        background: #f0f9eb;
+    }
+
+    #dev-table .el-table th {
+        padding: 0;
+    }
+
+    #dev-table .el-table td {
+        padding: 0;
+    }
+
+    #device-table {
+        padding: 0px 5px 5px 5px;
+        height: 100%;
+    }
+
+    .table-small {
+        font-size: 12px;
+    }
+
+    #form {
+        overflow-y: scroll;
+        height: calc(100% - 0px);
+        padding-left: 5px;
+        width: calc(100% + 5px);
+        margin-top: 10px;
+    }
+
+    #form::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+
+    .reg-form {
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .el-form-item__label {
+        font-size: 10px;
+    }
+
+    .el-form-item__content {
+        margin-left: 10px;
+    }
+
+    .el-input {
+        width: 80%;
+        height: 20px;
+    }
+
+    #graph {
+        width: 100%;
+        height: 70%;
+        border-bottom: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #detail-graph {
+        width: 80%;
+        height: 100%;
+    }
+
+    #trans-charts {
+        width: 65%;
+        height: 100%;
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #devices-panel {
+        width: 35%;
+        height: 100%;
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #device-list {
+        width: 100%;
+        height: 55%;
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    #behavior-chart {
+        width: 100%;
+        height: 45%;
+        border: solid 1px rgba(154, 154, 154, 0.3);
+        box-sizing: border-box;
+        border-radius: 5px;
+        z-index: 10;
+    }
+
+    #time-bar {
+        width: 100%;
+        height: 30%;
+    }
+
+    .el-switch__label span {
+        font-size: 12px;
+    }
+
+    #dynamic-switch {
+        /*padding: 5px;*/
+        display: flex;
+        justify-content: center;
+    }
+
+    #dynamic-switch .el-switch__label:not(.is-active) {
+        color: #ffffff
+    }
+
+    #user-switch {
+        /*padding: 5px;*/
+        display: flex;
+        justify-content: center;
+    }
+
+    #user-chart {
+        height: 100%;
+    }
+
+    #code-viewer {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    #source-panel {
+        height: 10%;
+        width: 100%;
+    }
+
+    #source-button {
+        position: absolute;
+        bottom: 30px;
+        box-shadow: 0px 4px 8px 1px #3c3f4147;
+        z-index: 3;
+    }
+
+    .vue-codemirror {
+        height: 100%;
+    }
+
+    .vue-codemirror-wrap {
+        height: 100%;
+        width: 100%;
+    }
+
+    .CodeMirror {
+        height: 100%;
+        width: 100%;
+        font-size: 12px;
+    }
+
+    #pred {
+        height: 100%;
+        width: 20%;
+    }
+
+    .el-form-item__label {
+        color: white
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(66, 66, 66, 0.3);
+        border-radius: 5px;
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #555;
+    }
+
+    #pred .el-switch__label:not(.is-active) {
+        color: #409eff
+    }
+
+    #pred .el-switch__label.is-active {
+        color: #909399
+    }
+
+    .el-popover {
+        background: #5d6366;
+    }
+
+    .el-popper .popper__arrow {
+        display: none;
+    }
+
+    .el-popover__title {
+        color: white;
+    }
+</style>
+<body>
+<div id="header-container">
+    <div id="header">
+        <i class="el-icon-s-unfold" @click="unfold()"></i>
+        <div id="header-text">inJARctor VIS</div>
+        <el-popover
+                title="Panels"
+                placement="bottom-end"
+                trigger="hover"
+                style="margin-left: auto;">
+            <el-button id="uid-str" slot="reference" type="text">[[uid]]</el-button>
+            <el-radio-group fill="#909399" text-color="white" v-model="radio" @change="onChange()">
+                <el-radio-button label="transitions"></el-radio-button>
+                <el-radio-button label="performance"></el-radio-button>
+            </el-radio-group>
+            <!--            <div id="uid-str" slot="reference">[[uid]]</div>-->
+        </el-popover>
+    </div>
+    <el-drawer
+            :visible.sync="drawer"
+            direction="ltr"
+            z-index="8"
+            size="20%"
+            @open="opened"
+            @close="closed"
+            :show-close="sclose"
+            :modal="modal">
+    </el-drawer>
+</div>
+<div id="container">
+    <div id="left-bar">
+        <!--        <div id="left-top-bar">-->
+        <!--            Selection Panel-->
+        <!--        </div>-->
+        <div id="left-top1">
+            <!--            <div id="user-panel">-->
+            <!--                <div id="user-switch">-->
+            <!--                    <el-switch-->
+            <!--                            v-model="value"-->
+            <!--                            inactive-text="Filter Mode"-->
+            <!--                            active-text="Coordinate Mode"-->
+            <!--                            @change="switchUserMode">-->
+            <!--                    </el-switch>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <div id="form">
+                <el-form :model="ruleForm" status-icon label-width="60px"
+                         class="reg-form" size="mini" lab>
+                    <el-form-item label="PACKAGE" prop="pkg" style="margin: 0px 20px 5px 0px;">
+                        <el-input v-model="ruleForm.pkg"></el-input>
+                    </el-form-item>
+                    <el-form-item label="BRAND" prop="brand" style="margin: 0px 20px 5px 0px;">
+                        <el-input v-model="ruleForm.brand"></el-input>
+                    </el-form-item>
+                    <el-form-item label="PRODUCT" prop="product" style="margin: 0px 20px 5px 0px;">
+                        <el-input v-model="ruleForm.product"></el-input>
+                    </el-form-item>
+                    <el-form-item label="HARDWARE" prop="vn" style="margin: 0px 20px 5px 0px;">
+                        <el-input v-model="ruleForm.vn"></el-input>
+                    </el-form-item>
+                    <el-form-item label="UID" prop="uid" style="margin: 0px 20px 5px 0px;">
+                        <el-input v-model="ruleForm.uid"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm(ruleForm)" size="mini">filter</el-button>
+                        <el-button @click="resetForm('ruleForm')" size="mini">clear</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <!--                                    <div id="chart4" style="width:100%; height:calc(100% - 20px); margin: auto;"></div>-->
+        </div>
+        <div id="left-top2">
+            <div id="dev-table">
+                <el-dialog
+                        title="Device Infomation"
+                        :visible.sync="dialogVisible"
+                        width="30%">
+                    <span>Notation</span>
+                    <span slot="footer" class="dialog-footer">
+                        <el-button @click="dialogVisible = false">Cancel</el-button>
+                        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+                    </span>
+                </el-dialog>
+                <template>
+                    <el-table
+                            :data="tableData"
+                            border
+                            height="100%"
+                            style="width: 100%"
+                            class="table-small"
+                            :row-style="{height: '0'}"
+                            :cell-style="{padding: '0',background:'#5d6366',color:'#ffffff'}"
+                            style="font-size: 5px"
+                            :header-cell-style="{background:'#3c3f41',color:'#ffffff'}">
+                        <el-table-column
+                                label="BRAND"
+                                prop="BRAND"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                label="Prod."
+                                prop="PRODUCT"
+                                width="90">
+                        </el-table-column>
+                        <el-table-column
+                                label="H. Ver."
+                                prop="VERSION_HARDWARE"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                label="S. Ver."
+                                prop="VERSION_ANDROID"
+                                width="55">
+                        </el-table-column>
+                        <el-table-column
+                                label="Mem."
+                                prop="MEMORY"
+                                width="100">
+                        </el-table-column>
+                        <el-table-column
+                                label="CPU Freq."
+                                prop="CPU_FREQ"
+                                width="100">
+                        </el-table-column>
+                        <el-table-column
+                                label="Cores"
+                                prop="CPU_CORES"
+                                width="55">
+                        </el-table-column>
+                        <el-table-column
+                                label="uid"
+                                prop="uid"
+                                width="280">
+                        </el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="option"
+                                width="55">
+                            <template slot-scope="scope">
+                                <el-button @click="handleClick(scope.row)" type="text"
+                                           size="mini">select
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </div>
+        </div>
+        <div id="left-bottom1">
+            <div id="mode-selector">
+                <div id="dynamic-switch">
+                    <el-switch
+                            v-model="value"
+                            inactive-text="Selective Mode"
+                            active-text="Dynamic Mode"
+                            @change="switchMode">
+                    </el-switch>
+                </div>
+                <div id="search-date">
+                    <el-date-picker
+                            v-model="value"
+                            type="month"
+                            placeholder="Month"
+                            size="mini"
+                            @change="selectDate">
+                    </el-date-picker>
+                </div>
+            </div>
+            <div id="calendar" style="width:100%; height:100%;"></div>
+        </div>
+        <div id="left-bottom2">
+            <div id="ope-table">
+                <template>
+                    <el-table
+                            :data="tableData"
+                            height="100%"
+                            border
+                            style="width: 100%"
+                            class="table-small"
+                            :row-style="{height: '0'}"
+                            :cell-style="{padding: '0',background:'#5d6366',color:'#ffffff'}"
+                            style="font-size: 5px"
+                            :header-cell-style="{background:'#3c3f41',color:'#ffffff'}">
+                        <el-table-column
+                                prop="date"
+                                label="Date"
+                                sortable>
+                        </el-table-column>
+                        <el-table-column
+                                prop="st"
+                                label="Start"
+                                sortable>
+                        </el-table-column>
+                        <el-table-column
+                                prop="et"
+                                label="End"
+                                sortable>
+                        </el-table-column>
+                        <el-table-column
+                                prop="lt"
+                                label="elapse"
+                                sortable>
+                        </el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="option"
+                                width="55">
+                            <template slot-scope="scope">
+                                <el-button @click="handleClick(scope.row,scope.$index)" type="text" size="mini">check
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </div>
+        </div>
+    </div>
+    <div id="mid">
+        <div class="top-bar">
+            Component Status
+        </div>
+        <div id="mid-top">
+            <div id="graph">
+                <div id="markov" style="width:100%; height:100%;"></div>
+            </div>
+            <div id="time-bar">
+                <div id="bar" style="width:100%; height:100%;"></div>
+            </div>
+        </div>
+        <div id="mid-bottom">
+            <div id="status-table">
+                <template>
+                    <el-table
+                            :data="tableData"
+                            v-loading="loading"
+                            height="100%"
+                            class="table-small"
+                            border
+                            style="width: 100%"
+                            :row-class-name="tableRowStatus"
+                            :default-sort="{prop: 'number', order: 'ascending'}"
+                            :row-style="{height: '0'}"
+                            :cell-style="{padding: '0'}">
+                        <el-table-column
+                                prop="number"
+                                label="No."
+                                width="65"
+                                sortable>
+                        </el-table-column>
+                        <el-table-column
+                                prop="method"
+                                label="Method"
+                                width="280"
+                                sortable>
+                        </el-table-column>
+                        <el-table-column
+                                prop="class"
+                                label="Class"
+                                width="280"
+                                sortable>
+                        </el-table-column>
+                        <el-table-column
+                                prop="time"
+                                label="Timestamp"
+                                sortable
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="status"
+                                label="Status"
+                                width="60">
+                        </el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="option"
+                                width="150">
+                            <template slot-scope="scope">
+                                <el-button @click="handleClick(scope.row,scope.$index)" type="text" size="small">check
+                                </el-button>
+                                <el-button @click="handleClickPred(scope.row,scope.$index)" type="text" size="small">
+                                    predict
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </div>
+        </div>
+    </div>
+    <div id="mid2">
+        <div class="top-bar">
+            Transitions Panel
+        </div>
+        <div id="mid2-top">
+            <div id="detail-graph">
+                <div id="detail-markov" style="width:100%; height:100%;"></div>
+            </div>
+            <div id="pred">
+                <template>
+                    <el-table
+                            :data="tableData"
+                            height="100%"
+                            border
+                            v-loading="loading"
+                            style="width: 100%"
+                            class="table-small"
+                            :default-sort="{prop: 'st', order: 'descending'}"
+                            :row-style="{height: '0'}"
+                            :cell-style="{padding: '0'}"
+                            style="font-size: 5px">
+                        <el-table-column
+                                prop="infer"
+                                label="Prediction based on LSTM">
+                            <el-table-column
+                                    prop="item"
+                                    label="Item"
+                                    width="100">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="desc"
+                                    label="Description">
+                            </el-table-column>
+                            <template slot="header" slot-scope="scope">
+                                <el-tooltip class="item" effect="dark" content="At least 15 nodes" placement="top-end"
+                                            :disabled="!disabled">
+                                    <el-switch
+                                            v-model="engineOn"
+                                            active-text=""
+                                            inactive-text="Prediction based on LSTM"
+                                            :disabled="disabled">
+                                    </el-switch>
+                                </el-tooltip>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </div>
+        </div>
+        <div id="mid2-bottom">
+            <div id="trans-charts">
+                <div id="matrix-bar" style="width:100%; height:100%;"></div>
+            </div>
+            <div id="devices-panel">
+                <div id="device-list">
+                    <div id="device-table">
+                        <template>
+                            <el-table
+                                    :data="tableData"
+                                    border
+                                    height="100%"
+                                    style="width: 100%"
+                                    class="table-small"
+                                    :cell-style="{padding: '0'}"
+                                    style="font-size: 5px"
+                                    :row-class-name="tableRowClassName"
+                                    :row-style="selectedstyle"
+                                    @row-click="rowClick">
+                                <el-table-column
+                                        label="uid"
+                                        prop="uid"
+                                        width="280">
+                                </el-table-column>
+                                <el-table-column
+                                        label="BRAND"
+                                        prop="BRAND"
+                                        width="80">
+                                </el-table-column>
+                                <el-table-column
+                                        label="Prod."
+                                        prop="PRODUCT"
+                                        width="90">
+                                </el-table-column>
+                                <el-table-column
+                                        label="H. Ver."
+                                        prop="VERSION_HARDWARE"
+                                        width="150">
+                                </el-table-column>
+                                <el-table-column
+                                        label="S. Ver."
+                                        prop="VERSION_ANDROID"
+                                        width="55">
+                                </el-table-column>
+                                <el-table-column
+                                        label="Mem."
+                                        prop="MEMORY"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        label="CPU Freq."
+                                        prop="CPU_FREQ"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        label="Cores"
+                                        prop="CPU_CORES"
+                                        width="55">
+                                </el-table-column>
+                            </el-table>
+                        </template>
+                    </div>
+                </div>
+                <div id="behavior-chart">
+                    <div id="chart4" style="width:100%; height:100%; margin: auto;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="right-bar">
+        <div id="right-top-bar" class="top-bar">
+            Source Code
+        </div>
+        <div id="right-top">
+            <!--            <div id="single-statics" style="width:100%; height:100%; margin: auto;"></div>-->
+        </div>
+        <div id="right-top2">
+            <!--            <div id="inference-graph" style="width:100%; height:100%; margin: auto;"></div>-->
+
+        </div>
+        <div id="right-bottom">
+            <div id="code-viewer">
+                <template>
+                    <codemirror v-model="code" :options="cmOptions" style="width: 100%;"></codemirror>
+                </template>
+                <el-button id="source-button" type="success" @click="getSource()" round>Source</el-button>
+                <el-dialog :title="title" :visible.sync="dialogCoderVisible">
+                    <codemirror v-model="all_code" :options="cmOptions"
+                                style="width: 100%; height: 600px;"></codemirror>
+                </el-dialog>
+            </div>
+            <div id="source-panel">
+            </div>
+        </div>
+    </div>
+    <div id="right2-bar">
+        <div id="right2-top-bar" class="top-bar">
+            Summarization Panel
+        </div>
+        <div id="right2-top">
+            <div id="single-statics" style="width:100%; height:100%; margin: auto;"></div>
+        </div>
+        <div id="right2-bottom">
+            <div id="chart1" style="width:100%; height:100%; margin: auto;"></div>
+        </div>
+        <div id="right2-bottom2">
+            <div id="chart2" style="width:100%; height:100%; margin: auto;"></div>
+        </div>
+        <div id="right2-bottom3">
+            <div id="chart3" style="width:100%; height:100%; margin: auto;"></div>
+            <!--                        <div id="chart4" style="width:100%; height:100%; margin: auto;"></div>-->
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    // Vue.component('codemirror', VueCodeMirror.codemirror)
+    Vue.use(VueCodemirror)
+    ELEMENT.locale(ELEMENT.lang.en);
+    const calendar = echarts.init(document.getElementById("calendar"), 'lightgrey', {render: "svg"});
+    const tree = echarts.init(document.getElementById("single-statics"), 'white', {render: "svg"});
+    const markov = echarts.init(document.getElementById("markov"), 'white', {render: "svg"});
+    const detail_markov = echarts.init(document.getElementById("detail-markov"), 'white', {render: "svg"});
+    const bar = echarts.init(document.getElementById("bar"), 'white', {render: "svg"});
+    const chart1 = echarts.init(document.getElementById("chart1"), 'white', {render: "svg"});
+    const chart2 = echarts.init(document.getElementById("chart2"), 'white', {render: "svg"});
+    const chart3 = echarts.init(document.getElementById("chart3"), 'white', {render: "svg"});
+    const chart4 = echarts.init(document.getElementById("chart4"), 'white', {render: "svg"});
+    const matrix_bar = echarts.init(document.getElementById("matrix-bar"), 'white', {render: "svg"});
+
+    chart4.setOption({
+        title: {
+            text: "User Behavior Vector",
+        },
+        xAxis: {
+            scale: true,
+        },
+        yAxis: {
+            scale: true,
+        },
+    });
+    // const inference = echarts.init(document.getElementById("inference-graph"), 'white', {render: "svg"});
+    const loadingStyle = {
+        text: 'loading',
+        color: '#747474',
+        textColor: '#000',
+        maskColor: 'rgba(255, 255, 255, 0.8)',
+        zlevel: 0
+    }
+    var global_uid;
+    let global_index;
+    let global_vector;
+    let global_device;
+    let global_package;
+    let global_markov;
+    let global_class;
+    let interval = null;
+    var dataCount = 10;
+    var startTime = 0;
+    var depth = [];
+
+    // var user_switch = new Vue({
+    //     delimiters: ['[[', ']]'],
+    //     el: '#user-switch',
+    //     data: {
+    //         value: false,
+    //     },
+    //     methods: {
+    //         switchUserMode() {
+    //             form.show = this.value;
+    //         }
+    //     }
+    // })
+
+    var device_table = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#device-table',
+        data: {
+            tableData: [],
+            dialogVisible: false,
+            getIndices: [],
+            getIndex: "",
+            getUid: "",
+            uid: "none"
+        },
+        methods: {
+            selectedstyle({row, rowIndex}) {
+                // if (this.getIndices.includes(rowIndex)) {
+                // if (this.getIndex === rowIndex) {
+                //     return {
+                //         "background-color": "#5D6366",
+                //         "color": "white"
+                //     };
+                // }
+                if (this.getUid === row.uid) {
+                    return {
+                        "background-color": "#d3dadc",
+                    };
+                }
+                if (row.uid === this.uid) {
+                    return {
+                        "background-color": "#4e5557",
+                        "color": "white"
+                    };
+                }
+            },
+            tableRowClassName({row, rowIndex}) {
+                row.index = rowIndex;
+            },
+            rowClick(row) {
+                if (this.getIndices.length == 2) {
+                    this.getIndices.shift();
+                }
+                this.getIndices.push(row.index);
+                this.getIndex = row.index;
+                this.getUid = row.uid;
+                var this_uid = row.uid;
+                var this_index = global_vector.uidList.findIndex((array) => array === this_uid)
+                var this_data = global_vector.all[this_index]
+                device_table.getUid = this_uid;
+                console.log(global_vector.matrix_list[this_index].x)
+                matrix_bar.setOption({
+                    xAxis: {
+                        data: global_vector.matrix_list[this_index].x,
+                    },
+                    series: [
+                        {
+                            name: 'Area 1',
+                            type: 'bar',
+                            stack: 'total',
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: global_vector.matrix_list[this_index].y1
+                        },
+                        {
+                            name: 'Area 2',
+                            type: 'bar',
+                            stack: 'total',
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: global_vector.matrix_list[this_index].y2
+                        },
+                        {
+                            name: 'Area 3',
+                            type: 'bar',
+                            stack: 'total',
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: global_vector.matrix_list[this_index].y3
+                        },
+                        {
+                            name: 'Area 4',
+                            type: 'bar',
+                            stack: 'total',
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: global_vector.matrix_list[this_index].y4
+                        },
+                    ]
+                })
+                chart4.setOption({
+                    series: [{
+                        type: 'effectScatter',
+                        symbolSize: 20,
+                        data: [this_data],
+                        rippleEffect: {
+                            color: '#80F1BE',
+                            period: 2.5,
+                            scale: 3.5,
+                            brushType: "fill"
+                        },
+                    }, {
+                        type: 'scatter',
+                        data: global_vector.all,
+                    }]
+                })
+            }
+        }
+    })
+
+    var dev_table = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#dev-table',
+        data: {
+            tableData: [],
+            dialogVisible: false
+        },
+        methods: {
+            handleClick(row) {
+                markov.showLoading(loadingStyle)
+                chart4.showLoading(loadingStyle)
+                this.tableData = [row]
+                close_drawer()
+                this.$message({
+                    message: 'Successfully selected ' + row.uid + '.',
+                    type: 'success',
+                    showClose: true,
+                    duration: 5000,
+                    offset: 60,
+                });
+                global_uid = row.uid;
+                header_container.uid = global_uid;
+                device_table.uid = global_uid;
+                fetchData(global_uid);
+                getuserchart();
+                fetchDataData(global_uid);
+                getchart3();
+            },
+        }
+    })
+
+    var search_data = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#search-date',
+        data: {
+            value: ''
+        },
+        methods: {
+            selectDate() {
+                if (typeof (global_uid) == 'undefined') {
+                    this.$message({
+                        message: 'NO device has been selected!',
+                        type: 'error',
+                        showClose: true,
+                        duration: 5000,
+                        offset: 60,
+                    });
+                } else if (dynamic_switch.value) {
+                    this.$message({
+                        message: 'On Dynamic Mode!',
+                        type: 'error',
+                        showClose: true,
+                        duration: 5000,
+                        offset: 60,
+                    });
+                } else {
+                    if (typeof (this.value) != 'undefined') {
+                        calendar.setOption({
+                            visualMap: {
+                                show: true,
+                            },
+                            calendar: {
+                                range: getDateFormatted(this.value)
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    })
+
+    var dynamic_switch = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#dynamic-switch',
+        data: {
+            value: false
+        },
+        methods: {
+            switchMode() {
+                status_table.loading = true
+                markov.showLoading(loadingStyle)
+                if (typeof (global_uid) == 'undefined') {
+                    this.$message({
+                        message: 'NO device has been selected!',
+                        type: 'error',
+                        showClose: true,
+                        duration: 5000,
+                        offset: 60,
+                    });
+                } else {
+                    if (this.value) {
+                        this.$message({
+                            message: 'Switching to dynamic mode!',
+                            type: 'warning',
+                            offset: 60,
+                        });
+                        calendar.setOption({
+                            series: {data: []}
+                        });
+                        interval = setInterval(fetchDynamicData, 600);
+                    } else {
+                        this.$message({
+                            message: 'Switching to selective mode!',
+                            type: 'warning',
+                            offset: 60,
+                        });
+                        clearInterval(interval);
+                        fetchData(global_uid);
+                        fetchDataData(global_uid);
+                    }
+                }
+            }
+        }
+    })
+
+    var status_table = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#status-table',
+        data: {
+            loading: false,
+            tableData: []
+        },
+        methods: {
+            tableRowStatus({row, rowIndex}) {
+                if (row.status == "Start") {
+                    return 'warning-row';
+                } else if (row.status == "End") {
+                    return 'success-row';
+                }
+                return '';
+            },
+            handleClick(row, $index) {
+                // console.log(row);
+                console.log($index);
+                $.ajax({
+                    type: "POST",
+                    url: "../getinnerstatus",
+                    data: {
+                        "index": global_index,
+                        "index_method": $index,
+                        "uid": global_uid,
+                        "pkg": global_package
+                    },
+                    success: function (result) {
+                        console.log(result.result);
+                        tree.setOption({
+                            series: {
+                                data: result.result
+                            }
+                        })
+                    }
+                });
+                code_viewer.loading = true;
+                global_class = row.class;
+                console.log(global_class);
+                getmethod(row.class, row.method);
+                getchart1(row.class + "." + row.method);
+                getchart2(row.class + "." + row.method);
+            },
+            handleClickPred(row, $index) {
+                console.log(row);
+                pred.loading = true;
+                $.ajax({
+                    type: "POST",
+                    url: "../getinference",
+                    data: {
+                        "index": global_index,
+                        "index_method": $index,
+                        "uid": global_uid,
+                        "pkg": global_package
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        pred.tableData = [{
+                            "item": "name",
+                            "desc": result.name
+                        }, {
+                            "item": "runtime",
+                            "desc": result.time + " (label: " + result.labeltime + ")"
+                        }, {
+                            "item": "probability",
+                            "desc": result.probability
+                        },]
+                        pred.loading = false;
+                    }
+                })
+            }
+        }
+    })
+
+    var ope_table = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#ope-table',
+        data: {
+            tableData: [],
+        },
+        methods: {
+            handleClick(row, $index) {
+                markov.showLoading(loadingStyle);
+                bar.showLoading(loadingStyle);
+                global_index = this.tableData[$index].index
+                console.log(global_index)
+                this.tableData = [this.tableData[$index]]
+                status_table.loading = true
+                close_drawer()
+                $.ajax({
+                    type: "POST",
+                    url: "../getindexdata",
+                    data: {
+                        "index": global_index,
+                        "uid": global_uid,
+                        "pkg": global_package
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        const links = result["links"];
+                        const nodes = result["nodes"];
+                        const tableData = result["tableData"];
+                        markov.setOption({
+                            series: [{links: links, data: nodes}],
+                            title: {
+                                text: "Selected Markov Graph"
+                            },
+                            tooltip: {
+                                show: true,
+                                position: 'right',
+                                formatter: function (params) {
+                                    if (params.dataType == "node") {
+                                        return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                                            + params.name.split("#")[0]
+                                            + '</div>'
+                                            + 'Class:' + params.data.category + '<br>'
+                                            + 'Method:' + params.data.name.substring(params.data.category.length, params.data.name.length).split("#")[0] + '<br>'
+                                            + 'Status:' + params.data.name.split("#")[1] + '<br>'
+                                            + "Times:" + params.value + '<br>';
+                                    } else {
+                                        return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                                            + 'MDP'
+                                            + '</div>'
+                                            + 'Source: ' + params.data.source + '<br>'
+                                            + 'Target: ' + params.data.target + '<br>'
+                                            + "Times: " + params.value + '<br>'
+                                            + "probability: " + (params.value / nodes[nodes.findIndex((array) => array.name == params.data.source)].value).toFixed(2) + '<br>';
+                                    }
+                                }
+                            }
+                        });
+                        status_table.tableData = tableData;
+                        status_table.loading = false
+                        markov.hideLoading();
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "../gettimeline",
+                    data: {
+                        "index": global_index,
+                        "uid": global_uid,
+                        "pkg": global_package
+                    },
+                    success: function (result) {
+                        console.log(result.result);
+                        bar.setOption({
+                            series: [{
+                                data: result.result
+                            }]
+                        })
+                        bar.hideLoading();
+                    }
+                });
+            }
+        }
+    })
+
+    var form = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#form',
+        data: {
+            ruleForm: {
+                brand: '',
+                product: '',
+                vn: '',
+                pkg: '',
+                uid: ''
+            },
+            show: false,
+        },
+        methods: {
+            submitForm(formName) {
+                console.log(formName);
+                global_package = formName.pkg
+                // user_switch.value = true;
+                form.show = true;
+                // chart4.showLoading(loadingStyle);
+                $.ajax({
+                    type: "POST",
+                    url: "../find_mongodb",
+                    data: {
+                        "BRAND": JSON.stringify(formName.brand),
+                        "PRODUCT": JSON.stringify(formName.product),
+                        "VERSION_HARDWARE": JSON.stringify(formName.vn),
+                        "uid": JSON.stringify(formName.uid)
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        dev_table.tableData = result.result;
+                        device_table.tableData = result.result;
+                        global_device = result.result;
+                        // getuserchart("");
+                    }
+                });
+            },
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            }
+        }
+    })
+
+    var code_viewer = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#code-viewer',
+        data: {
+            loading: false,
+            code: '',
+            cmOptions: {
+                tabSize: 2,
+                mode: 'text/x-java',
+                lineNumbers: true,
+                line: true,
+                lineWrapping: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                scrollbarStyle: null,
+                styleSelectedText: true,
+            },
+            dialogCoderVisible: false,
+            title: ".java Not Found",
+            all_code: '',
+        },
+        methods: {
+            getSource() {
+                this.dialogCoderVisible = true;
+                this.all_code = getmethod(global_class, "");
+                this.title = global_class + ".java"
+            }
+        }
+    })
+
+    var source_panel = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#source-panel',
+    })
+
+    function getmethod(class_name, method) {
+        $.ajax({
+            type: "POST",
+            url: "../getmethod",
+            data: {
+                "class_name": class_name,
+                "method": method,
+            },
+            success: function (result) {
+                console.log(result.result);
+                if (method.length != 0) {
+                    code_viewer.code = result.result[0];
+                    code_viewer.loading = false;
+                } else {
+                    code_viewer.all_code = result.result;
+                }
+            }
+        });
+    };
+
+    var pred = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#pred',
+        data: {
+            loading: false,
+            tableData: [],
+            engineOn: false,
+            disabled: true
+        }
+    })
+
+    function fetchDataData(uid) {
+        $.ajax({
+            type: "POST",
+            url: "../fetch_date",
+            dataType: "json",
+            data: {
+                "uid": uid,
+                "pkg": global_package
+            },
+            success: function (result) {
+                // console.log(result.result[0][0]);
+                var default_month = result.result[0][0].substring(0, 7);
+                // console.log(default_month);
+                calendar.setOption(
+                    {
+                        calendar: {range: default_month},
+                        series: {data: result.result}
+                    });
+            }
+        });
+    }
+
+    function fetchDynamicData() {
+        $.ajax({
+            type: "POST",
+            url: "../getdynamicdata2",
+            dataType: "json",
+            data: {
+                "uid": global_uid,
+                "pkg": global_package
+            },
+            success: function (result) {
+                const links = result["links"];
+                const nodes = result["nodes"];
+                const tableData = result["tableData"];
+                if (nodes.length != markov.getOption().series[0].data.length) {
+                    markov.setOption({
+                        series: [{links: links, data: nodes}],
+                        title: {
+                            text: "Dynamic Markov Graph"
+                        }
+                    });
+                    status_table.tableData = tableData;
+                }
+                status_table.loading = false
+                markov.hideLoading();
+            }
+        });
+    }
+
+    function fetchData(uid) {
+        $.ajax({
+            type: "GET",
+            url: "../getdata/" + uid,
+            dataType: "json",
+            success: function (result) {
+                markov.setOption(result);
+                $.ajax({
+                    type: "POST",
+                    url: "../getdata",
+                    dataType: "json",
+                    data: {
+                        "uid": global_uid,
+                        "pkg": global_package
+                    },
+                    success: function (result) {
+                        const links = result["links"];
+                        const nodes = result["nodes"];
+                        markov.setOption({
+                            series: [{links: links, data: nodes}],
+                            title: {
+                                text: "Selected Markov Graph"
+                            },
+                            tooltip: {
+                                show: true,
+                                position: 'right',
+                                formatter: function (params) {
+                                    if (params.dataType == "node") {
+                                        return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                                            + params.name.split("#")[0]
+                                            + '</div>'
+                                            + 'Class:' + params.data.category + '<br>'
+                                            + 'Method:' + params.data.name.substring(params.data.category.length, params.data.name.length).split("#")[0] + '<br>'
+                                            + 'Status:' + params.data.name.split("#")[1] + '<br>'
+                                            + "Times:" + params.value + '<br>';
+                                    } else {
+                                        return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                                            + 'MDP'
+                                            + '</div>'
+                                            + 'Source: ' + params.data.source + '<br>'
+                                            + 'Target: ' + params.data.target + '<br>'
+                                            + "Times: " + params.value + '<br>'
+                                            + "probability: " + (params.value / nodes[nodes.findIndex((array) => array.name == params.data.source)].value).toFixed(2) + '<br>';
+                                    }
+                                }
+                            }
+                        });
+                        global_markov = markov.getOption().series[0];
+                        status_table.loading = false
+                        markov.hideLoading();
+                        bar.setOption({
+                            series: [{
+                                data: []
+                            }]
+                        })
+                        status_table.tableData = []
+                    }
+                })
+            }
+        });
+    }
+
+    function getDateFormatted(inputdate) {
+        var k = inputdate;
+        var dt = new Date(k);
+        var yr = dt.getYear() + 1900;
+        var mn = dt.getMonth() + 1;
+        return yr + "-" + mn;
+    }
+
+    calendar.setOption({
+        visualMap: {
+            show: true,
+            orient: 'vertical',
+            left: '10px',
+            bottom: 'center',
+            min: 0,
+            max: 10,
+            itemHeight: '50px',
+            textStyle: {
+                color: 'white'
+            }
+        },
+        calendar: {
+            show: false,
+            orient: "vertical",
+            left: 'center',
+            range: '2017-01',
+            top: '20%',
+            yearLabel: {show: false},
+            dayLabel: {
+                textStyle: {
+                    color: 'white'
+                }
+            },
+            monthLabel: {
+                textStyle: {
+                    color: 'white'
+                }
+            }
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: []
+        }
+    });
+
+    calendar.on('click', function (params) {
+        // alert(params.value);
+        if (typeof (global_uid) == 'undefined') {
+            this.$message({
+                message: 'NO device has been selected!',
+                type: 'error',
+                showClose: true,
+                duration: 5000,
+                offset: 60,
+            });
+        } else if (dynamic_switch.value) {
+            this.$message({
+                message: 'On Dynamic Mode!',
+                type: 'error',
+                showClose: true,
+                duration: 5000,
+                offset: 60,
+            });
+        } else {
+            var date = params.value[0];
+            $.ajax({
+                type: "POST",
+                url: "../search_date",
+                data: {
+                    "date": date,
+                    "uid": global_uid,
+                    "pkg": global_package
+                },
+                success: function (result) {
+                    console.log(result);
+                    ope_table.tableData = result.result
+                }
+            });
+        }
+    });
+
+    markov.on('click', function (params) {
+        const node_name = params.name;
+        getchart1(node_name);
+        getchart2(node_name);
+    });
+
+    markov.on('dblclick', function (params) {
+        var node_name = params.data.name;
+        const all_nodes = global_markov.data;
+        const node = all_nodes[all_nodes.findIndex((array) => array.name === node_name)];
+        console.log(window);
+        const links = global_markov.links;
+        const targets = links.filter((array) => array.source === node_name);
+        // (params.value / nodes[nodes.findIndex((array) => array.name == params.data.source)].value).toFixed(2)
+        let nodes = new Array({
+            name: node_name,
+            x: 550,
+            y: 300,
+            symbolSize: [15, 15],
+            symbol: 'roundRect',
+            itemStyle: {
+                color: "red"
+            },
+            value: node.value,
+            label: {
+                position: 'bottom',
+                show: true,
+            },
+        });
+        let source_nodes = new Array();
+        for (let i = 0; i < targets.length; i++) {
+            if (targets[i].value / node.value > 0.009) {
+                source_nodes.push({
+                    name: targets[i].target,
+                    x: 900 + targets.length * 50,
+                    y: 300 + (i - 0.5 * (targets.length - 1)) * 100,
+                    symbolSize: 13,
+                    value: targets[i].value
+                });
+            }
+        }
+        for (let i = 0; i < source_nodes.length; i++) {
+            source_nodes[i].x = 900 + targets.length * 50;
+            source_nodes[i].y = 300 + (i - 0.5 * (source_nodes.length - 1)) * 100;
+        }
+        const sources = links.filter((array) => array.target === node_name);
+        var base_sources_length = sources.length;
+        let target_nodes = new Array();
+        for (let i = 0; i < sources.length; i++) {
+            if (source_nodes.findIndex((array) => array.name === sources[i].source) == -1 && sources[i].value / node.value > 0.009) {
+                target_nodes.push({
+                    name: sources[i].source,
+                    x: 0,
+                    y: 0,
+                    symbolSize: 13,
+                    value: sources[i].value
+                });
+            } else {
+                base_sources_length -= 1;
+            }
+        }
+        for (let i = 0; i < target_nodes.length; i++) {
+            target_nodes[i].x = 200 - target_nodes.length * 50;
+            target_nodes[i].y = 300 + (i - 0.5 * (target_nodes.length - 1)) * 100;
+        }
+        nodes = nodes.concat(source_nodes, target_nodes)
+        var max_num = Math.max(base_sources_length, targets.length);
+        const total_links = targets.concat(sources);
+        let edges = new Array();
+        for (let i = 0; i < total_links.length; i++) {
+            var prob = (total_links[i].value / node.value).toFixed(2);
+            if (prob > 0.009) {
+                edges.push({
+                    source: total_links[i].source,
+                    target: total_links[i].target,
+                    lineStyle: {
+                        width: 3,
+                        curveness: 0.3
+                    },
+                    value: prob,
+                });
+            }
+        }
+        detail_markov.setOption({
+            series: [
+                {
+                    name: 'Component Status',
+                    type: 'graph',
+                    layout: 'none',
+                    data: nodes,
+                    links: edges,
+                    roam: true,
+                    edgeSymbol: ['circle', 'arrow'],
+                    edgeSymbolSize: [4, 15],
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            formatter: function (params) {
+                                return params.value;
+                            },
+                            color: 'black',
+                            position: 'middle',
+                            offset: [0, 10]
+                        }
+                    },
+                    itemStyle: {
+                        borderWidth: 1,
+                        borderColor: '#333',
+                        opacity: 0.8
+                    },
+                }
+            ],
+        });
+        pred.disabled = true;
+        pred.engineOn = false;
+    });
+
+    detail_markov.setOption({
+        tooltip: {},
+        title: {
+            text: 'Inference Panel',
+            top: 'top',
+            left: 'left'
+        },
+    })
+
+    detail_markov.on('dblclick', function (params) {
+        const node_name = params.data.name;
+        const node_symbol = params.data.symbol;
+        const detail_markov_option = detail_markov.getOption();
+        const detail_markov_series = detail_markov.getOption().series[0];
+        const node_index = detail_markov_series.data.findIndex((array) => array.name === node_name);
+        const ori_nodes = detail_markov_series.data;
+        const node = ori_nodes[node_index];
+        const nodes = ori_nodes.filter((array) => array.symbol == 'roundRect');
+        nodes.push({
+            name: node_name,
+            x: nodes[nodes.length - 1].x + 100,
+            y: nodes[nodes.length - 1].y,
+            symbolSize: [15, 15],
+            symbol: 'roundRect',
+            itemStyle: {
+                color: "red"
+            },
+            value: node.value,
+            label: {
+                position: 'bottom',
+                show: false,
+            },
+        });
+        var links = new Array();
+        for (let i = 0; i < nodes.length - 1; i++) {
+            links.push({
+                source: nodes[i].name,
+                target: nodes[i + 1].name,
+                symbolSize: [-1, -1],
+                lineStyle: {
+                    width: 3,
+                    curveness: 0
+                },
+                label: {
+                    show: false,
+                },
+                value: 1
+            });
+        }
+        if (nodes.length > 14) {
+            if (pred.disabled) {
+                pred.$notify.info({
+                    title: 'Tips',
+                    message: 'LSTM Prediction is available!',
+                    offset: 50
+                });
+                pred.disabled = false;
+            }
+            if (pred.engineOn) {
+                pred.loading = true;
+                var selected_node_list = new Array();
+                for (let i=0;i<nodes.length;i++) {
+                    console.log(nodes[i].name);
+                    selected_node_list.push(nodes[i].name);
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "../getmarkovinfer",
+                    dataType: "json",
+                    data: {
+                        "uid": global_uid,
+                        "selected_tlist": JSON.stringify(selected_node_list)
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        pred.tableData = [{
+                            "item": "name",
+                            "desc": result.name
+                        }, {
+                            "item": "runtime",
+                            "desc": result.time
+                        }, {
+                            "item": "probability",
+                            "desc": result.probability
+                        },];
+                        pred.loading = false;
+                    }
+                })
+            }
+        }
+        const targets = global_markov.links.filter((array) => array.source === node_name);
+        const all_nodes = global_markov.data;
+        const this_node = all_nodes[all_nodes.findIndex((array) => array.name === node_name)];
+        console.log(targets)
+        let target_nodes = new Array();
+        for (let i = 0; i < targets.length; i++) {
+            if (targets[i].value / this_node.value > 0.009 && nodes.findIndex((array) => array.name === targets[i].target) == -1) {
+                target_nodes.push({
+                    name: targets[i].target,
+                    x: nodes[nodes.length - 1].x + 200,
+                    y: nodes[nodes.length - 1].y + (i - 0.5 * (targets.length - 1)) * 100,
+                    symbolSize: 13,
+                    value: targets[i].value
+                });
+            }
+        }
+        for (let i = 0; i < target_nodes.length; i++) {
+            target_nodes[i].x = nodes[nodes.length - 1].x + 200;
+            target_nodes[i].y = nodes[nodes.length - 1].y + (i - 0.5 * (target_nodes.length - 1)) * 100;
+        }
+        for (let i = 0; i < target_nodes.length; i++) {
+            var prob = (target_nodes[i].value / this_node.value).toFixed(2);
+            if (prob > 0.009) {
+                links.push({
+                    source: node_name,
+                    target: target_nodes[i].name,
+                    lineStyle: {
+                        width: 3,
+                        curveness: 0
+                    },
+                    value: prob,
+                });
+            }
+        }
+        detail_markov_option.series[0].data = nodes.concat(target_nodes);
+        detail_markov_option.series[0].links = links;
+        detail_markov_option.series[0].center = [nodes[nodes.length - 1].x + 100, nodes[nodes.length - 1].y];
+        detail_markov_option.series[0].zoom = 1.0;
+
+        console.log(detail_markov_option);
+        detail_markov.setOption(detail_markov_option);
+
+    })
+
+    tree.setOption({
+        tooltip: {
+            show: true,
+            position: 'left',
+            formatter: function (params) {
+                // return params.name;
+                return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                    + params.name
+                    + '</div>'
+                    + "Runtime:" + '<br>'
+                    + Math.round(params.value) + 'ms' + '<br>';
+            }
+        },
+        visualMap: {
+            type: 'continuous',
+            min: 0,
+            max: 200,
+            inRange: {
+                color: ['#51c3ff', '#73b876', '#ffc518', '#ff4900']
+            },
+            bottom: '10px',
+            left: '10px',
+            itemHeight: '100px',
+        },
+        series: {
+            type: 'sunburst',
+            data: [],
+            radius: [0, '90%'],
+            label: {
+                rotate: 'radial',
+                show: false,
+            },
+            emphasis: {
+                label: {
+                    show: false,
+                    position: 'right',
+                    formatter: function (params) {
+                        return params.name;
+                    }
+                }
+            },
+            left: 'center',
+            top: 'center'
+        }
+    });
+
+    function renderItem(params, api) {
+        var categoryIndex = api.value(0);
+        var start = api.coord([api.value(1), categoryIndex]);
+        var end = api.coord([api.value(2), categoryIndex]);
+        var height = api.size([0, 1])[1];
+
+        var rectShape = echarts.graphic.clipRectByRect({
+            x: start[0],
+            y: start[1] - height / 2,
+            width: end[0] - start[0],
+            height: height
+        }, {
+            x: params.coordSys.x,
+            y: params.coordSys.y,
+            width: params.coordSys.width,
+            height: params.coordSys.height
+        });
+
+        return rectShape && {
+            type: 'rect',
+            transition: ['shape'],
+            shape: rectShape,
+            style: api.style()
+        };
+    }
+
+    bar.setOption({
+        tooltip: {
+            show: true,
+            position: 'right',
+            formatter: function (params) {
+                // return params.marker + params.name + ': ' + params.value[3] + ' ms';
+                return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                    + params.name
+                    + '</div>'
+                    + "Runtime:" + '<br>'
+                    + Math.round(params.value[3]) + 'ms' + '<br>';
+            }
+        },
+        title: {
+            text: 'Selected Timeline',
+            left: '10'
+        },
+        dataZoom: [{
+            type: 'slider',
+            showDataShadow: true,
+            bottom: 10,
+            left: 5,
+            right: 5,
+            labelFormatter: '',
+            size: "mini"
+        }, {
+            type: 'inside',
+        }],
+        grid: {
+            top: 30,
+            left: 20,
+            right: 20,
+            bottom: 60
+        },
+        xAxis: {
+            min: startTime,
+            scale: true,
+            axisLabel: {
+                formatter: function (val) {
+                    return Math.max(0, val - startTime) + ' ms';
+                }
+            }
+        },
+        yAxis: {
+            data: [],
+            show: false,
+        },
+        series: [{
+            type: 'custom',
+            renderItem: renderItem,
+            itemStyle: {
+                opacity: 0.8
+            },
+            encode: {
+                x: [1, 2],
+                y: 0
+            },
+            data: []
+        }]
+    });
+
+    bar.on('click', function (params) {
+        $.ajax({
+            type: "POST",
+            url: "../getinnerstatusfortimeline",
+            data: {
+                "index": global_index,
+                "uid": global_uid,
+                "pkg": global_package,
+                "start_time": params.data.value[1],
+                "end_time": params.data.value[2]
+            },
+            success: function (result) {
+                console.log(result.result);
+                tree.setOption({
+                    series: {
+                        data: result.result
+                    }
+                })
+            }
+        });
+        var class_name = chart3.getOption().archive[params.data.name][0];
+        var method_name = chart3.getOption().archive[params.data.name][1];
+        global_class = class_name;
+        getmethod(class_name, method_name);
+        getchart1(params.data.name);
+        getchart2(params.data.name);
+    });
+
+    chart1.setOption({
+        title: {
+            text: 'Component operation stability',
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        xAxis: {
+            type: 'category',
+            data: [],
+            show: false,
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [],
+            type: 'bar',
+            markLine: {
+                data: [
+                    {type: 'average', name: 'average'}
+                ]
+            }
+        }]
+    });
+
+    function getchart1(method_name) {
+        $.ajax({
+            type: "POST",
+            url: "../getchart1",
+            dataType: "json",
+            data: {
+                "uid": global_uid,
+                "method_name": method_name,
+            },
+            success: function (result) {
+                console.log(result);
+                chart1.setOption(
+                    {
+                        xAxis: {data: result.xaxis},
+                        series: {data: result.data},
+                        title: {subtext: method_name}
+                    });
+            }
+        });
+    }
+
+    chart2.setOption({
+        title: {
+            text: 'Heterogeneous Resources Comparison',
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        xAxis: {
+            type: 'category',
+            data: [],
+            show: false,
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [],
+            type: 'bar',
+        }]
+    });
+
+    function getchart2(method_name) {
+        $.ajax({
+            type: "POST",
+            url: "../getchart2",
+            dataType: "json",
+            data: {
+                "uid": global_uid,
+                "method_name": method_name,
+            },
+            success: function (result) {
+                console.log(result);
+                chart2.setOption(
+                    {
+                        xAxis: {data: result.xaxis},
+                        series: {data: result.data},
+                        title: {subtext: method_name}
+                    });
+            }
+        });
+    }
+
+    chart3.setOption({
+        title: {
+            text: 'Components Runtime Sorting',
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        dataset: [],
+        dataZoom: [{
+            type: 'inside'
+        }, {
+            type: 'slider'
+        }],
+        xAxis: {
+            type: 'category',
+            axisLabel: {interval: 0, rotate: 30},
+            show: false,
+        },
+        yAxis: {
+            name: "score",
+
+        },
+        visualMap: {
+            orient: 'horizontal',
+            left: 'center',
+            top: 20,
+            min: 50,
+            max: 500,
+            // Map the score column to color
+            dimension: 1,
+            inRange: {
+                color: ['#65B581', '#FFCE34', '#FD665F']
+            }
+        },
+        series: {
+            type: 'bar',
+            encode: {x: 'name', y: 'score'},
+            datasetIndex: 1
+        }
+    });
+
+    chart3.on('click', async function (params) {
+        console.log(chart3.getOption().archive);
+        code_viewer.loading = true;
+        var class_name = chart3.getOption().archive[params.name][0];
+        var method_name = chart3.getOption().archive[params.name][1];
+        getmethod(class_name, method_name);
+        getchart1(params.name);
+        getchart2(params.name);
+    });
+
+    function getchart3() {
+        $.ajax({
+            type: "POST",
+            url: "../getchart3",
+            dataType: "json",
+            data: {
+                "uid": global_uid,
+            },
+            success: function (result) {
+                console.log(result);
+                chart3.setOption({
+                    dataset: [{
+                        dimensions: ['name', 'runtime'],
+                        source: result.result,
+                    }, {
+                        transform: {
+                            type: 'sort',
+                            config: {dimension: 'runtime', order: 'desc'}
+                        }
+                    }],
+                    archive: result.cm,
+                });
+            }
+        });
+    }
+
+    function getuserchart() {
+        // if (uid.length == 0) {
+        $.ajax({
+            type: "POST",
+            url: "../getuserchart",
+            data: {
+                "global_uid": global_uid,
+            },
+            success: function (result) {
+                global_vector = result;
+                chart4.setOption({
+                    tooltip: {
+                        position: 'left',
+                        showDelay: 0,
+                        formatter: function (params) {
+                            return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                                + result.uidList[result.all.findIndex((array) => array[0] === params.data[0])]
+                                + '</div>'
+                                + "Behavior Vector:" + '<br>'
+                                + "[" + params.data[0].toFixed(2) + "," + params.data[1].toFixed(2) + "]" + '<br>';
+                        },
+                        extraCssText: 'z-index:9999'
+                    },
+                    title: {
+                        text: "User Behavior Vector",
+                        // textStyle: {
+                        //     color: 'white'
+                        // }
+                    },
+                    xAxis: {
+                        scale: true,
+                        // axisLabel: {color: 'white'},
+                        // axisLine: {lineStyle: {color: 'white'}}
+                    },
+                    yAxis: {
+                        scale: true,
+                        // axisLabel: {color: 'white'},
+                        // axisLine: {lineStyle: {color: 'white'}}
+                    },
+                    series: [{
+                        type: 'effectScatter',
+                        symbolSize: 20,
+                    }, {
+                        type: 'scatter',
+                        data: result.all,
+                    }]
+                });
+                chart4.hideLoading();
+            }
+        });
+        // }
+        // else {
+        //     var vector = global_vector;
+        //     var this_vector = vector.all[vector.uidList.indexOf(uid)]
+        //     console.log(this_vector);
+        //     chart4.setOption({
+        //         series: [{
+        //             type: 'effectScatter',
+        //             symbolSize: 20,
+        //             data: [this_vector],
+        //         }, {
+        //             type: 'scatter',
+        //             data: vector.all,
+        //         }]
+        //     })
+        // }
+    }
+
+    chart4.on('click', async function (params) {
+        console.log(params);
+        // close_drawer();
+        // global_uid = global_vector.uidList[global_vector.all.findIndex((array) => array[0] === params.data[0])];
+        // header_container.uid = global_uid
+        var this_index = global_vector.all.findIndex((array) => array[0] === params.data[0])
+        var this_uid = global_vector.uidList[this_index];
+        device_table.getUid = this_uid;
+        console.log(global_vector.matrix_list[this_index].x)
+        matrix_bar.setOption({
+            xAxis: {
+                data: global_vector.matrix_list[this_index].x,
+            },
+            series: [
+                {
+                    name: 'Area 1',
+                    type: 'bar',
+                    stack: 'total',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: global_vector.matrix_list[this_index].y1
+                },
+                {
+                    name: 'Area 2',
+                    type: 'bar',
+                    stack: 'total',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: global_vector.matrix_list[this_index].y2
+                },
+                {
+                    name: 'Area 3',
+                    type: 'bar',
+                    stack: 'total',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: global_vector.matrix_list[this_index].y3
+                },
+                {
+                    name: 'Area 4',
+                    type: 'bar',
+                    stack: 'total',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: global_vector.matrix_list[this_index].y4
+                },
+            ]
+        })
+        chart4.setOption({
+            series: [{
+                type: 'effectScatter',
+                symbolSize: 20,
+                data: [params.data],
+                rippleEffect: {
+                    color: '#80F1BE',
+                    period: 2.5,
+                    scale: 3.5,
+                    brushType: "fill"
+                },
+            }, {
+                type: 'scatter',
+                data: global_vector.all,
+            }]
+        })
+        // status_table.loading = true
+        // markov.showLoading(loadingStyle)
+        // console.log(dev_table);
+        // var row = global_device.filter(function (app) {
+        //     return app.uid == global_uid;
+        // });
+        // console.log(row);
+        // dev_table.tableData = row
+        // dev_table.$message({
+        //     message: 'Successfully selected ' + global_uid + '.',
+        //     type: 'success',
+        //     showClose: true,
+        //     duration: 5000,
+        //     offset: 60,
+        // });
+        // fetchData(global_uid);
+        // fetchDataData(global_uid);
+        // getchart3();
+    });
+
+    matrix_bar.setOption({
+        title: {
+            text: 'Statistical chart of Manhattan distance'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // Use axis to trigger tooltip
+                type: 'shadow'        // 'shadow' as default; can also be 'line' or 'shadow'
+            }
+        },
+        legend: {
+            data: ['Area 1', 'Area 2', 'Area 3', 'Area 4'],
+            y: '88%'
+        },
+        grid: {
+            top: 50,
+            bottom: 80,
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            data: []
+        },
+        yAxis: {
+            type: 'value',
+        },
+        dataZoom: [
+            {
+                show: true,
+                start: 94,
+                end: 100
+            },
+            {
+                type: 'inside',
+                start: 94,
+                end: 100
+            },
+            {
+                show: true,
+                yAxisIndex: 0,
+                filterMode: 'empty',
+                width: 30,
+                height: '80%',
+                showDataShadow: false,
+                left: '93%'
+            }
+        ],
+        series: [
+            {
+                name: 'Area 1',
+                type: 'bar',
+                stack: 'total',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: []
+            },
+            {
+                name: 'Area 2',
+                type: 'bar',
+                stack: 'total',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: []
+            },
+            {
+                name: 'Area 3',
+                type: 'bar',
+                stack: 'total',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: []
+            },
+            {
+                name: 'Area 4',
+                type: 'bar',
+                stack: 'total',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: []
+            },
+        ]
+    });
+
+    var header_container = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#header-container',
+        data: {
+            drawer: false,
+            direction: 'ltr',
+            sclose: false,
+            modal: true,
+            uid: "null     ⚆_⚆ ",
+            radio: "transitions"
+        },
+        methods: {
+            unfold() {
+                if (this.drawer) {
+                    this.drawer = false;
+                } else {
+                    this.drawer = true;
+                }
+            },
+            opened() {
+                open_drawer();
+            },
+            closed() {
+                close_drawer();
+            },
+            onChange() {
+                if (this.radio == "transitions") {
+                    let mid = document.getElementById("mid");
+                    mid.style.display = "block";
+                    let mid2 = document.getElementById("mid2");
+                    mid2.style.display = "block";
+                    let rightBar = document.getElementById("right-bar");
+                    rightBar.style.display = "none";
+                    let right2Bar = document.getElementById("right2-bar");
+                    right2Bar.style.display = "none";
+                } else {
+                    let mid = document.getElementById("mid");
+                    mid.style.display = "block";
+                    let mid2 = document.getElementById("mid2");
+                    mid2.style.display = "none";
+                    let rightBar = document.getElementById("right-bar");
+                    rightBar.style.display = "block";
+                    let right2Bar = document.getElementById("right2-bar");
+                    right2Bar.style.display = "block";
+                }
+                calendar.resize();
+                tree.resize();
+                markov.resize();
+                bar.resize();
+                chart1.resize();
+                chart2.resize();
+                chart3.resize();
+                chart4.resize();
+            }
+        }
+    })
+
+    function open_drawer() {
+        let leftbar = document.getElementById("left-bar")
+        setTimeout(async function () {
+            leftbar.style.display = "block";
+            calendar.resize();
+            chart4.resize();
+        }, 100)
+    }
+
+    function close_drawer() {
+        let leftbar = document.getElementById("left-bar")
+        leftbar.style.display = "none";
+        header_container.drawer = false;
+    }
+
+    window.onresize = function () {
+        calendar.resize();
+        tree.resize();
+        markov.resize();
+        bar.resize();
+        chart1.resize();
+        chart2.resize();
+        chart3.resize();
+        chart4.resize();
+        detail_markov.resize();
+        matrix_bar.resize();
+    }
+
+</script>
+</html>

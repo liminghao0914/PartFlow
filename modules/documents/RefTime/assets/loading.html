@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://echarts.caixin.com/doc/example/www2/index.html -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ECharts</title>
+</head>
+<body>
+<script src="echarts.min.js"></script>
+<div id="main" style="width:100%;height:300px;background:'#00000000';">
+    <script type="text/javascript">
+     var myChart = echarts.init(document.getElementById('main'));
+
+     window.onresize = myChart.resize;
+     myChart.showLoading();
+          var option={
+     backgroundColor: '#00000000'
+     }
+    /*窗口自适应，关键代码*/
+	        	setTimeout(function (){
+	        	    window.onresize = function () {
+	        	    	//myChart.resize();
+	        	    }
+	        	},200)
+</script>
+</body>
+</html>

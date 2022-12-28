@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:paddingLeft="24.0dip" android:paddingTop="24.0dip" android:paddingRight="24.0dip" android:paddingBottom="24.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="28.0dip">
+        <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="20.0dip" android:text="@string/AddRecord_date" />
+        <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textColor="#ffffffff" android:gravity="center" android:id="@id/today_add_record" android:background="@drawable/shape_selector" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/AddRecord_today" android:layout_weight="1.0" />
+        <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textColor="#ff707070" android:gravity="center" android:id="@id/yesterday_add_record" android:background="#ffffffff" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:text="@string/AddRecord_yesterday" android:layout_weight="1.0" />
+        <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textColor="#ff707070" android:gravity="center" android:id="@id/yesterday_and_today_add_record" android:background="#ffffffff" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:text="@string/AddRecord_today_yesterday" android:layout_weight="1.0" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="48.0dip" android:layout_marginTop="@dimen/activity_vertical_margin" android:layout_marginRight="4.0dip">
+        <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textColor="#ff333333" android:gravity="center" android:id="@id/record_time_show" android:layout_width="80.0dip" android:layout_height="fill_parent" android:text="0h30min" />
+        <FrameLayout android:background="@drawable/shape_textfield" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="15.0dip">
+            <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textColor="#ff333333" android:gravity="center" android:id="@id/add_record_start_time" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginLeft="24.0dip" android:text="12:30" />
+            <View android:layout_gravity="center" android:background="#ff707070" android:layout_width="36.0dip" android:layout_height="1.0dip" />
+            <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textColor="#ff333333" android:gravity="center" android:layout_gravity="right" android:id="@id/add_record_stop_time" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginRight="24.0dip" android:text="13:00" />
+        </FrameLayout>
+    </LinearLayout>
+    <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:paddingTop="32.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="@string/AddRecord_Activity" />
+    <LinearLayout android:background="@drawable/shape_textfield" android:layout_width="fill_parent" android:layout_height="88.0dip" android:layout_marginTop="@dimen/activity_vertical_margin" android:layout_marginRight="4.0dip">
+        <android.support.v7.widget.RecyclerView android:id="@id/emoji_id_recycle_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="6.0dip" />
+    </LinearLayout>
+    <FrameLayout android:orientation="horizontal" android:paddingTop="18.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginRight="4.0dip">
+        <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textColor="@color/textColorPrimary" android:layout_gravity="right" android:id="@id/text_cancel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="70.0dip" android:text="@string/AddRecord_cancel" />
+        <TextView android:textSize="@dimen/statistics_activity_text_size_small" android:textColor="@color/colorPrimary" android:layout_gravity="right" android:id="@id/text_finish" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/AddRecord_Done" />
+    </FrameLayout>
+</LinearLayout>

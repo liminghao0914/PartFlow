@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="time_record"/>
+    <version value="20"/>
+    <list>
+        <mapping class="DBManager.Database.RecordMenu"/>
+        <mapping class="DBManager.Database.RecordData"/>
+        <mapping class="DBManager.Database.UserSettingData"/>
+        <mapping class="DBManager.Database.RecordSort"/>
+        <mapping class="DBManager.Database.RePlanData"/>
+    </list>
+</litepal>

@@ -1,0 +1,53 @@
+{
+  "_default": {
+    "202": {
+      "type": "session",
+      "status": "aDelta",
+      "class": "com.androvid.videokit.HomeActivity",
+      "timestamp": 1614167940689,
+      "runtime": 0,
+      "uid": "DF40BDE799701DB2C16EAC962056D847"
+    }
+  }
+}{
+  "_default": {
+    "200": {
+      "type": "session",
+      "status": "aDelta",
+      "class": "com.androvid.videokit.HomeActivity",
+      "timestamp": 1614167940688,
+      "runtime": 6,
+      "uid": "DF40BDE799701DB2C16EAC962056D847"
+    }
+  }
+}{
+  "_default": {
+    "203": {
+      "type": "session",
+      "status": "gDelta",
+      "class": "com.androvid.videokit.HomeActivity",
+      "timestamp": 1614167940691,
+      "runtime": 233,
+      "uid": "DF40BDE799701DB2C16EAC962056D847"
+    }
+  }
+}{
+  "_default": {
+    "194": {
+      "type": "session",
+      "status": "bDelta",
+      "class": "com.androvid.videokit.HomeActivity$b",
+      "timestamp": 1614167940602,
+      "runtime": 0,
+      "uid": "DF40BDE799701DB2C16EAC962056D847"
+    },
+    "201": {
+      "type": "session",
+      "status": "uDelta",
+      "class": "com.androvid.videokit.HomeActivity",
+      "timestamp": 1614167940690,
+      "runtime": 232,
+      "uid": "DF40BDE799701DB2C16EAC962056D847"
+    }
+  }
+}
