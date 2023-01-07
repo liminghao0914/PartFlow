@@ -1,15 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
--------------------------------------------------
-   File Name：     charts
-   Description :
-   Author :       liminghao
-   date：          2020-11-13
--------------------------------------------------
-   Change Activity:
-                   2020-11-13:
--------------------------------------------------
-"""
 __author__ = 'liminghao'
 
 import csv
@@ -157,12 +146,12 @@ def function_tree(uid) -> Graph:
             repulsion=100,
             edge_length=[10, 200],
             is_draggable=True,
-            emphasis={
-                "focus": 'adjacency',
-                "lineStyle": {
-                    "width": 5,
-                    "opacity": 0.5,
-                }},
+            # emphasis={
+            #     "focus": 'adjacency',
+            #     "lineStyle": {
+            #         "width": 5,
+            #         "opacity": 0.5,
+            #     }},
         )
             .set_global_opts(
             # title_opts=opts.TitleOpts(title="Global Markov Graph"),
