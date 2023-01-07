@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-__author__ = 'liminghao'
-
 import re
 import os, sys
 import subprocess

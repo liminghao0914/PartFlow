@@ -1,0 +1,55 @@
+{
+  "1F42C5113B8038C2534FF71FA8E297B7": {
+    "type": "device",
+    "BRAND": "Android",
+    "PRODUCT": "cancro",
+    "CPU_ABI": "armeabi-v7a",
+    "MODEL": "MuMu",
+    "HARDWARE": "cancro",
+    "VERSION_ANDROID": "6.0.1",
+    "MEMORY": "3627732 kB",
+    "CPU_FREQ": 2400000,
+    "CPU_CORES": 6,
+    "uid": "1F42C5113B8038C2534FF71FA8E297B7"
+  },
+  "DF40BDE799701DB2C16EAC962056D847": {
+    "type": "device",
+    "BRAND": "Android",
+    "PRODUCT": "cancro",
+    "CPU_ABI": "armeabi-v7a",
+    "MODEL": "MuMu",
+    "HARDWARE": "cancro",
+    "VERSION_ANDROID": "6.0.1",
+    "MEMORY": "1027176 kB",
+    "CPU_FREQ": 2400000,
+    "CPU_CORES": 1,
+    "uid": "DF40BDE799701DB2C16EAC962056D847"
+  }
+}{
+  "1F42C5113B8038C2534FF71FA8E297B7": {
+    "type": "device",
+    "BRAND": "Android",
+    "PRODUCT": "cancro",
+    "CPU_ABI": "armeabi-v7a",
+    "MODEL": "MuMu",
+    "HARDWARE": "cancro",
+    "VERSION_ANDROID": "6.0.1",
+    "MEMORY": "3627732 kB",
+    "CPU_FREQ": 2400000,
+    "CPU_CORES": 6,
+    "uid": "1F42C5113B8038C2534FF71FA8E297B7"
+  },
+  "DF40BDE799701DB2C16EAC962056D847": {
+    "type": "device",
+    "BRAND": "Android",
+    "PRODUCT": "cancro",
+    "CPU_ABI": "armeabi-v7a",
+    "MODEL": "MuMu",
+    "HARDWARE": "cancro",
+    "VERSION_ANDROID": "6.0.1",
+    "MEMORY": "1027176 kB",
+    "CPU_FREQ": 2400000,
+    "CPU_CORES": 1,
+    "uid": "DF40BDE799701DB2C16EAC962056D847"
+  }
+}

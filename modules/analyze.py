@@ -1,4 +1,15 @@
 # -*- coding: utf-8 -*-
+"""
+-------------------------------------------------
+   File Name：     analyze
+   Description :
+   Author :       liminghao
+   date：          2020-11-13
+-------------------------------------------------
+   Change Activity:
+                   2020-11-13:
+-------------------------------------------------
+"""
 __author__ = 'liminghao'
 import os
 from flask import Blueprint, request, redirect, url_for

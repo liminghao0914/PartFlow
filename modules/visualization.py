@@ -45,7 +45,7 @@ def all_timestamp_sort(uid):
             for t in mydict[clazz][method]:
                 u.append([clazz, method + "#Start", t[1] - t[0], t[2] - int(t[0] / 1000000)])
                 u.append([clazz, method + "#End", t[1], t[2]])
-    u_sorted = sorted(u, key=lambda x: x[2])
+    u_sorted = sorted(u, key=lambda x: x[3])
     return u_sorted
 
 
@@ -95,6 +95,7 @@ def search_date():
         return [index for (index, value) in enumerate(lst) if value == item]
 
     start_index = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')
+    # start_index = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')
     tlist_sequential = []
     for i in range(len(start_index) - 1):
         tlist_sequential.append(tlist[start_index[i]:start_index[i + 1]])
@@ -119,7 +120,8 @@ def fetch_date():
     uid = request.form.get("uid")
     package = request.form.get("pkg")
     mydict = {}
-    date_num = []
+    mydict2 = {}
+    date_num = [[],[]]
     tlist = runtime_filter(package, 0, all_timestamp_sort(uid))
     tlist_T = list(map(list, zip(*tlist)))
 
@@ -127,10 +129,18 @@ def fetch_date():
         return [index for (index, value) in enumerate(lst) if value == item]
 
     start_index = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')
+    # start_index = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')
     tlist_sequential = []
     for i in range(len(start_index) - 1):
         tlist_sequential.append(tlist[start_index[i]:start_index[i + 1]])
     tlist_sequential.append(tlist[start_index[-1]:])
+    for t in tlist:
+        timestamp = time.localtime(float(int(t[3]) / 1000))
+        day = time.strftime("%Y-%m-%d", timestamp)
+        if day not in mydict2.keys():
+            mydict2[day] = 1
+        else:
+            mydict2[day] += 1
     for tlist in tlist_sequential:
         timestamp = time.localtime(float(int(tlist[0][3]) / 1000))
         day = time.strftime("%Y-%m-%d", timestamp)
@@ -139,7 +149,8 @@ def fetch_date():
         else:
             mydict[day] += 1
     for day in mydict.keys():
-        date_num.append([day, mydict[day]])
+        date_num[0].append([day, mydict[day]])
+        date_num[1].append([day, mydict2[day]])
     return jsonify(result=date_num)
 
 
@@ -188,9 +199,9 @@ def getdynamicdata2():
             nodes_dict[state]["count"] += 1
     for key in links_dict.keys():
         link = links_dict[key]
-        # size = sqrt(sqrt(link.get("count")*50))
+        size = 1 + link.get("count") * link.get("count") / 500
         links.append(opts.GraphLink(source=link.get("source"), target=link.get("target"),
-                                    value=link.get("count"), symbol='none').opts)
+                                    value=link.get("count"), symbol='none', linestyle_opts={"width": size}).opts)
     for key in nodes_dict.keys():
         node = nodes_dict[key]
         size = sqrt(node.get("count") * 10)
@@ -198,6 +209,30 @@ def getdynamicdata2():
                                     category=node.get("class")).opts)
 
     return jsonify({"links": links, "nodes": nodes, "seq": new_tlist, "tableData": tableData})
+
+
+@visualization.route('/getdynamictimeline', methods=['GET', 'POST'])
+def getdynamictimeline():
+    uid = request.form.get("uid")
+    package = request.form.get("pkg")
+    tlist = runtime_filter(package, 0, all_timestamp_sort(uid))
+    tlist_T = list(map(list, zip(*tlist)))
+    new_index_start = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[-1]
+    new_tlist = tlist[new_index_start:]
+    oritime = new_tlist[0][2]
+    depth_list = generate_depth(new_tlist)
+    node_list = []
+    for node in depth_list:
+        node_list.append({
+            "name": node["name"],
+            "value": [
+                node["depth"],
+                float((node["time_start"] - oritime) / 1000000),
+                float((node["time_end"] - oritime) / 1000000),
+                node["value"]
+            ]
+        })
+    return jsonify(result=node_list)
 
 
 @visualization.route('/getdata', methods=['GET', 'POST'])
@@ -244,15 +279,130 @@ def getdata():
             nodes_dict[state]["count"] += 1
     for key in links_dict.keys():
         link = links_dict[key]
-        # size = sqrt(sqrt(link.get("count")*50))
+        size = 1 + link.get("count") * link.get("count") / 500
         links.append(opts.GraphLink(source=link.get("source"), target=link.get("target"),
-                                    value=link.get("count"), symbol='none').opts)
+                                    value=link.get("count"), symbol='none', linestyle_opts={"width": size}).opts)
     for key in nodes_dict.keys():
         node = nodes_dict[key]
         size = sqrt(node.get("count") * 10)
         nodes.append(opts.GraphNode(name=node.get("name"), symbol_size=3, value=node.get("count"),
                                     category=node.get("class")).opts)
 
+    return jsonify({"links": links, "nodes": nodes, "seq": new_tlist, "tableData": tableData})
+
+
+@visualization.route('/getdata/default', methods=['GET', 'POST'])
+def getdata_default():
+    uid = request.form.get("uid")
+    package = request.form.get("pkg")
+    tlist = runtime_filter(package, 0, all_timestamp_sort(uid))
+    tlist_T = list(map(list, zip(*tlist)))
+
+    def get_index(lst=None, item=''):
+        return [index for (index, value) in enumerate(lst) if value == item]
+
+    new_tlist = tlist.copy()
+    new_index_start = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[5]
+    new_index_end = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[6]
+    # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[0]
+    # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[1]
+    new_tlist = tlist[new_index_start:new_index_end]
+    # new_tlist = tlist[0:-1]
+    tableData = []
+    for i, t in enumerate(new_tlist):
+        clazz = t[0]
+        method = t[1].split("#")[0]
+        time = int(t[2] / 1000000)
+        status = t[1].split("#")[1]
+        tableData.append({
+            "number": i + 1,
+            "method": method,
+            "class": clazz,
+            "time": time,
+            "status": status
+        })
+    links_dict = {}
+    nodes_dict = {}
+    links = []
+    nodes = []
+    for i in range(len(new_tlist) - 1):
+        state = getname(new_tlist[i])
+        target = getname(new_tlist[i + 1])
+        link_name = state + " > " + target
+        if link_name not in links_dict.keys():
+            links_dict[link_name] = {"source": state, "target": target, "count": 1}
+        else:
+            links_dict[link_name]["count"] += 1
+    method_dict = {}
+    for i in range(len(tlist) - 1):
+        clazz = tlist[i][0]
+        name = getname(tlist[i])
+        if clazz not in method_dict.keys():
+            method_dict[clazz] = {}
+            method_dict[clazz][name] = []
+            method_dict[clazz][name].append(getname(tlist[i + 1]))
+        else:
+            if name not in method_dict[clazz].keys():
+                method_dict[clazz][name] = []
+                method_dict[clazz][name].append(getname(tlist[i + 1]))
+            else:
+                if getname(tlist[i + 1]) not in method_dict[clazz][name]:
+                    method_dict[clazz][name].append(getname(tlist[i + 1]))
+    categories = []
+    for clazz in method_dict.keys():
+        categories.append(clazz)
+    for node in new_tlist:
+        state = getname(node)
+        if state not in nodes_dict.keys():
+            nodes_dict[state] = {"name": state, "class": node[0], "count": 1}
+        else:
+            nodes_dict[state]["count"] += 1
+
+    for key in links_dict.keys():
+        link = links_dict[key]
+        size = 1 + link.get("count") * link.get("count") / 500
+        links.append(opts.GraphLink(source=link.get("source"), target=link.get("target"),
+                                    value=link.get("count"), symbol='none', linestyle_opts={"width": size}).opts)
+
+    for key in nodes_dict.keys():
+        node = nodes_dict[key]
+        size = sqrt(node.get("count") * 10)
+        nodes.append(opts.GraphNode(name=node.get("name"), symbol_size=size, value=node.get("count"),
+                                    category=node.get("class")).opts)
+        # links.append(opts.GraphLink(source=node.get("name"), target=node.get("class"),
+        #                             value=node.get("count"),
+        #                             symbol='none').opts)
+
+    # for cat in categories:
+    #     total_value = 0
+    #     for methods in method_dict[cat].keys():
+    #         total_value += nodes_dict[methods].get("count")
+    # nodes.append(opts.GraphNode(name=cat,
+    #                             # symbol_size=len(method_dict[cat].keys()),
+    #                             symbol_size=3,
+    #                             value=sqrt(total_value*10),
+    #                             category=cat).opts)
+
+    total_links_dict = {}
+    for key in links_dict.keys():
+        link = links_dict[key]
+        source = link.get("source")
+        target = link.get("target")
+        source_clazz = nodes_dict[source].get("class")
+        target_clazz = nodes_dict[target].get("class")
+        count = link.get("count")
+        link_name = source_clazz + " > " + target_clazz
+        if link_name not in total_links_dict.keys():
+            total_links_dict[link_name] = {"source": source_clazz, "target": target_clazz, "count": count}
+        else:
+            total_links_dict[link_name]["count"] += count
+        # size = sqrt(sqrt(link.get("count")*50))
+
+    for key in total_links_dict.keys():
+        link = total_links_dict[key]
+        # links.append(opts.GraphLink(source=link.get("source"), target=link.get("target"),
+        #                             value=link.get("count"),
+        #                             symbol='none').opts)
     return jsonify({"links": links, "nodes": nodes, "seq": new_tlist, "tableData": tableData})
 
 
@@ -269,6 +419,8 @@ def getindexdata():
 
     new_index_start = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
     new_index_end = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+    # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
+    # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
     new_tlist = tlist[new_index_start:new_index_end]
     tableData = []
     for i, t in enumerate(new_tlist):
@@ -304,8 +456,9 @@ def getindexdata():
     for key in links_dict.keys():
         link = links_dict[key]
         # size = sqrt(sqrt(link.get("count")*50))
+        size = 1 + link.get("count") * link.get("count") / 500
         links.append(opts.GraphLink(source=link.get("source"), target=link.get("target"),
-                                    value=link.get("count"), symbol='none').opts)
+                                    value=link.get("count"), symbol='none', linestyle_opts={"width": size}).opts)
     for key in nodes_dict.keys():
         node = nodes_dict[key]
         size = sqrt(node.get("count") * 10)
@@ -354,10 +507,11 @@ def generate_treelist(seq):
                 else:
                     continue
             if flag:
-                print("_________")
-                print(tmp_stack)
-                print(c)
-                print("_________")
+                # print("_________")
+                # print(tmp_stack)
+                # print(c)
+                # print("_________")
+                pass
     tree_list = []
     # clear other threads function
     extra_indices = []
@@ -418,6 +572,8 @@ def getinnerstatus():
     tlist_T = list(map(list, zip(*tlist)))
     new_index_start = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
     new_index_end = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+    # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
+    # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
     new_tlist = tlist[new_index_start:new_index_end]
     clazz_start = new_tlist[mindex_start][0]
     method_start = new_tlist[mindex_start][1].split("#")[0]
@@ -693,6 +849,8 @@ def getinnerstatusfortimeline():
     tlist_T = list(map(list, zip(*tlist)))
     new_index_start = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
     new_index_end = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+    # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
+    # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
     new_tlist = tlist[new_index_start:new_index_end]
     oritime = new_tlist[0][2]
     for i, new_t in enumerate(new_tlist):
@@ -715,6 +873,8 @@ def gettimeline():
     tlist_T = list(map(list, zip(*tlist)))
     new_index_start = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
     new_index_end = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+    # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
+    # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
     new_tlist = tlist[new_index_start:new_index_end]
     oritime = new_tlist[0][2]
     depth_list = generate_depth(new_tlist)
@@ -742,6 +902,8 @@ def getinference():
     tlist_T = list(map(list, zip(*tlist)))
     new_index_start = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
     new_index_end = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+    # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
+    # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
     new_tlist = tlist[new_index_start:new_index_end]
     selected_tlist = new_tlist[mindex_start - 14:mindex_start + 1]
     selected_tlist_T = list(map(list, zip(*selected_tlist)))
@@ -780,6 +942,7 @@ def getinference():
         "labeltime": str(y_label_tmp)
     })
 
+
 @visualization.route('/getmarkovinfer', methods=['GET', 'POST'])
 def getmarkovinfer():
     uid = request.form.get("uid")
@@ -811,6 +974,7 @@ def getmarkovinfer():
         "probability": str(yhat[0][y_value]),
         "time": str(y_value_tmp),
     })
+
 
 @visualization.route('/getmethod', methods=['GET', 'POST'])
 def getmethod():

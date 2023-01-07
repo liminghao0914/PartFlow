@@ -1,4 +1,15 @@
 # -*- coding: utf-8 -*-
+"""
+-------------------------------------------------
+   File Name：     SessionAnalyzer
+   Description :
+   Author :       liminghao
+   date：          11/23/20
+-------------------------------------------------
+   Change Activity:
+                   11/23/20:
+-------------------------------------------------
+"""
 __author__ = 'liminghao'
 import json
 from itertools import groupby

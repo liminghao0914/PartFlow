@@ -1,0 +1,222 @@
+digraph G {
+	node [fillcolor="1 1.347 1" style=filled]
+	"org.geogebra.android.g3d.Graphing3DApplication.onCreate()"
+	node [fillcolor="1 1.347 1" style=filled]
+	"org.geogebra.android.g3d.Graphing3DApplication.onCreate()"
+	node [fillcolor="1 0.011 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.011 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.011 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 6.325 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.325 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.325 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.325 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 5.988 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 6.325 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 0.053 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 5.988 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 5.988 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 5.988 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 0.053 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.053 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.053 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.724 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onSaveInstanceState()"
+	node [fillcolor="1 0.724 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onSaveInstanceState()"
+	node [fillcolor="1 0.033 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.033 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.033 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 12.22 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 12.22 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 12.22 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 12.22 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 11.503 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 12.22 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 0.118 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 11.503 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 11.503 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 11.503 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 0.118 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.118 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.118 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 1.373 1" style=filled]
+	"org.geogebra.android.g3d.Graphing3DApplication.onCreate()"
+	node [fillcolor="1 1.373 1" style=filled]
+	"org.geogebra.android.g3d.Graphing3DApplication.onCreate()"
+	node [fillcolor="1 0.015 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.015 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.015 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 6.061 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.061 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.061 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.061 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 5.739 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 6.061 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 0.077 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 5.739 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 5.739 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 5.739 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 0.077 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.077 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.077 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 1.369 1" style=filled]
+	"org.geogebra.android.g3d.Graphing3DApplication.onCreate()"
+	node [fillcolor="1 1.369 1" style=filled]
+	"org.geogebra.android.g3d.Graphing3DApplication.onCreate()"
+	node [fillcolor="1 0.01 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.01 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.01 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 6.348 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.348 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.348 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.348 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 6.018 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 6.348 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 0.065 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 6.018 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 6.018 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 6.018 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 0.065 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.065 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.065 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.253 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onSaveInstanceState()"
+	node [fillcolor="1 0.253 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onSaveInstanceState()"
+	node [fillcolor="1 0.023 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.023 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.023 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 12.765 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 12.765 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 12.765 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 12.765 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 12.08 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 12.765 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 0.28 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 12.08 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 12.08 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 12.08 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 0.28 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.28 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.28 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 1.375 1" style=filled]
+	"org.geogebra.android.g3d.Graphing3DApplication.onCreate()"
+	node [fillcolor="1 1.375 1" style=filled]
+	"org.geogebra.android.g3d.Graphing3DApplication.onCreate()"
+	node [fillcolor="1 0.01 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.01 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 0.01 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.S0()"
+	node [fillcolor="1 5.984 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 5.984 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 5.984 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 5.984 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 5.651 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 5.984 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()"
+	node [fillcolor="1 0.047 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 5.651 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 5.651 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 5.651 1" style=filled]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()"
+	node [fillcolor="1 0.047 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.047 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	node [fillcolor="1 0.047 1" style=filled]
+	"org.geogebra.android.g3d.activity.a.M0()"
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()" -> "org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()" [label=314 color="0.18522 1 0.8"]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.onCreate()" -> "org.geogebra.android.g3d.activity.a.M0()" [label=6057 color="0.0 1 0.8"]
+	"org.geogebra.android.g3d.activity.Graphing3DActivity_.setContentView()" -> "org.geogebra.android.g3d.activity.a.M0()" [label=5743 color="0.0 1 0.8"]
+	graph [rankdir=LR]
+}

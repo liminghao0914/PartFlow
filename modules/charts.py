@@ -1,11 +1,21 @@
 # -*- coding: utf-8 -*-
+"""
+-------------------------------------------------
+   File Name：     charts
+   Description :
+   Author :       liminghao
+   date：          2020-11-13
+-------------------------------------------------
+   Change Activity:
+                   2020-11-13:
+-------------------------------------------------
+"""
 __author__ = 'liminghao'
 
 import csv
 from math import sqrt
 
 import keras
-import tensorflow as tf
 from flask import render_template, Blueprint, jsonify
 from jinja2 import Markup, Environment, FileSystemLoader
 from keras.utils.np_utils import to_categorical
@@ -26,10 +36,8 @@ import os
 # Uncomment the line below to make GPU unavaliable
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 charts = Blueprint("charts", __name__)
-# model_S = keras.models.load_model("algorithm/LSTM_4")
-model_S = tf.saved_model.load("algorithm/LSTM_3n")
-# model_T = keras.models.load_model("algorithm/LSTM_time")
-model_T = tf.saved_model.load("algorithm/LSTM_timen")
+model_S = keras.models.load_model("algorithm/LSTM_3n")
+model_T = keras.models.load_model("algorithm/LSTM_timen")
 serial = csv.reader(open("./cache/methods_id.csv"))
 serial_T = list(map(list, zip(*serial)))
 serial = list(map(list, zip(*serial_T)))
@@ -95,6 +103,7 @@ def getname(tlist):
 
 def function_tree(uid) -> Graph:
     tlist = runtime_filter("androvid", 0, all_timestamp_sort(uid))
+    # tlist = runtime_filter("reftime", 0, all_timestamp_sort(uid))
     tlist_T = list(map(list, zip(*tlist)))  # 1:class 2:method
     # with open("./modules/documents/les-miserables.json", "r", encoding="utf-8") as f:
     #     j = json.load(f)
@@ -156,8 +165,8 @@ def function_tree(uid) -> Graph:
                 }},
         )
             .set_global_opts(
-            title_opts=opts.TitleOpts(title="Global Markov Graph"),
-            legend_opts=opts.LegendOpts(orient="vertical", pos_left="2%", pos_top="30%", type_="scroll", pos_bottom="50%"),
+            # title_opts=opts.TitleOpts(title="Global Markov Graph"),
+            legend_opts=opts.LegendOpts(orient="vertical", pos_left="2%", pos_top="50%", type_="scroll", pos_bottom="50%"),
         )
 
     )

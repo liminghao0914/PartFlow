@@ -1,0 +1,144 @@
+{
+  "uid": "",
+  "type": "session",
+  "status": [
+    {
+      "class": "www.littlefoxes.reftime.MainActivity",
+      "method": "onResumeDelta",
+      "runtime": 1,
+      "timestamp": 1612845057067
+    },
+    {
+      "class": "www.littlefoxes.reftime.MainActivity",
+      "method": "onCreateDelta",
+      "runtime": 98,
+      "timestamp": 1612845428844
+    },
+    {
+      "class": "www.littlefoxes.reftime.MainActivity",
+      "method": "onCreateDelta",
+      "runtime": 134,
+      "timestamp": 1612845471304
+    },
+    {
+      "class": "www.littlefoxes.reftime.MainActivity",
+      "method": "onResumeDelta",
+      "runtime": 1,
+      "timestamp": 1612845472122
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.AddRecordActivity",
+      "method": "onCreateDelta",
+      "runtime": 56,
+      "timestamp": 1612845543191
+    },
+    {
+      "class": "www.littlefoxes.reftime.sort.ShowSortActivity",
+      "method": "onCreateDelta",
+      "runtime": 16,
+      "timestamp": 1612845550063
+    },
+    {
+      "class": "www.littlefoxes.reftime.sort.AddSortActivity",
+      "method": "onCreateDelta",
+      "runtime": 22,
+      "timestamp": 1612845558304
+    },
+    {
+      "class": "www.littlefoxes.reftime.MainActivity",
+      "method": "onResumeDelta",
+      "runtime": 0,
+      "timestamp": 1612845570861
+    },
+    {
+      "class": "www.littlefoxes.reftime.replan.RePlanAndRecordActivity",
+      "method": "onDestroyDelta",
+      "runtime": 1,
+      "timestamp": 1612845587985
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.ShowAllRecordActivity",
+      "method": "onCreateDelta",
+      "runtime": 9,
+      "timestamp": 1612845608928
+    },
+    {
+      "class": "www.littlefoxes.reftime.MainActivity",
+      "method": "onResumeDelta",
+      "runtime": 0,
+      "timestamp": 1612845610488
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.ShowAllRecordActivity",
+      "method": "onDestroyDelta",
+      "runtime": 2,
+      "timestamp": 1612845610936
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.ShowAllRecordActivity",
+      "method": "onCreateDelta",
+      "runtime": 8,
+      "timestamp": 1612845611459
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.ShowAllRecordActivity",
+      "method": "onDestroyDelta",
+      "runtime": 2,
+      "timestamp": 1612845615538
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.ShowAllRecordActivity",
+      "method": "onCreateDelta",
+      "runtime": 12,
+      "timestamp": 1612845616081
+    },
+    {
+      "class": "www.littlefoxes.reftime.MainActivity",
+      "method": "onResumeDelta",
+      "runtime": 1,
+      "timestamp": 1612845619263
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.ShowAllRecordActivity",
+      "method": "onDestroyDelta",
+      "runtime": 1,
+      "timestamp": 1612845619672
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.ShowAllRecordActivity",
+      "method": "onCreateDelta",
+      "runtime": 11,
+      "timestamp": 1612845620061
+    },
+    {
+      "class": "www.littlefoxes.reftime.MainActivity",
+      "method": "onResumeDelta",
+      "runtime": 0,
+      "timestamp": 1612845624012
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.ShowAllRecordActivity",
+      "method": "onCreateDelta",
+      "runtime": 55,
+      "timestamp": 1612845625922
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.EditRecordTimeActivity",
+      "method": "onDestroyDelta",
+      "runtime": 2,
+      "timestamp": 1612845631084
+    },
+    {
+      "class": "www.littlefoxes.reftime.MainActivity",
+      "method": "onResumeDelta",
+      "runtime": 0,
+      "timestamp": 1612845632297
+    },
+    {
+      "class": "www.littlefoxes.reftime.record.ShowAllRecordActivity",
+      "method": "onDestroyDelta",
+      "runtime": 2,
+      "timestamp": 1612845632719
+    }
+  ]
+}
