@@ -5,6 +5,7 @@ import csv
 from math import sqrt
 
 import keras
+import tensorflow as tf
 from flask import render_template, Blueprint, jsonify
 from jinja2 import Markup, Environment, FileSystemLoader
 from keras.utils.np_utils import to_categorical
@@ -25,9 +26,11 @@ import os
 # Uncomment the line below to make GPU unavaliable
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 charts = Blueprint("charts", __name__)
-model_S = keras.models.load_model("algorithm/LSTM_4")
-model_T = keras.models.load_model("algorithm/LSTM_time")
-serial = csv.reader(open("/home/li/Desktop/inJARctor_server/cache/methods_id.csv"))
+# model_S = keras.models.load_model("algorithm/LSTM_4")
+model_S = tf.saved_model.load("algorithm/LSTM_3n")
+# model_T = keras.models.load_model("algorithm/LSTM_time")
+model_T = tf.saved_model.load("algorithm/LSTM_timen")
+serial = csv.reader(open("./cache/methods_id.csv"))
 serial_T = list(map(list, zip(*serial)))
 serial = list(map(list, zip(*serial_T)))
 all_methods_count = len(serial_T[0])

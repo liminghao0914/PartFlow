@@ -5,7 +5,7 @@ __author__ = 'liminghao'
 from random import randrange
 from flask.json import jsonify
 from pyecharts.charts import Line
-from flask import render_template, Blueprint, safe_join, send_from_directory
+from flask import render_template, Blueprint, send_from_directory
 from pyecharts import options as opts
 import base64, os
 from utils.compile import compile_apk

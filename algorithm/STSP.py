@@ -60,7 +60,7 @@ def runtime_filter(clazz, threshold, time_list):
 
 
 def sequence_encoder(uid, clazz_filter):
-    serial = csv.reader(open("/home/li/Desktop/inJARctor_server/cache/methods_id.csv"))
+    serial = csv.reader(open("../cache/methods_id.csv"))
     serial_T = list(map(list, zip(*serial)))
     serial = list(map(list, zip(*serial_T)))
     all_methods_count = len(serial_T[0])
@@ -106,7 +106,7 @@ def sequence_encoder(uid, clazz_filter):
 
 
 def sequence_decoder(x_seq):
-    serial = csv.reader(open("/home/li/Desktop/inJARctor_server/cache/methods_id.csv"))
+    serial = csv.reader(open("../cache/methods_id.csv"))
     serial_T = list(map(list, zip(*serial)))
     serial = list(map(list, zip(*serial_T)))
     all_methods_count = len(serial_T[0])
@@ -199,7 +199,7 @@ def train(series, n_input, n_method):
     # series = series.reshape((len(series), -1))
     # print(len(series))
     # Generator Shape [(series_length - length)/batch, 2, batch size, length, onehot]
-    generator = TimeseriesGenerator(series_onehot, series_onehot, length=n_input, batch_size=4)
+    generator = TimeseriesGenerator(series_onehot, series_onehot, length=n_input, batch_size=128)
     # test
     # x = generator[0][0]
     # for i in x:
@@ -218,9 +218,9 @@ def train(series, n_input, n_method):
     model.compile(optimizer='adam', loss='cosine_similarity', metrics=['accuracy'])
     # fit model
     # model.fit(X, y, nb_epoch=500, batch_size=1, verbose=2)
-    model.fit_generator(generator, epochs=100, verbose=1)
+    model.fit_generator(generator, epochs=10, verbose=1)
     # save model
-    model.save("LSTM_3")
+    model.save("LSTM_3n")
 
     # # make a one step prediction out of sample
     # x_input = np.array(x_onehot).reshape((1, n_input, n_features))
@@ -250,15 +250,15 @@ def train_temp(series, time, n_input, n_method):
     x_input = []
     for idx in range(len(series_onehot) - n_input):
         x_input.append(list(series_onehot[idx:idx + n_input]))
-    x_input = np.array(x_input)
+    x_input = np.array(x_input[:200])
     meta_model = Model(n_input, n_features)
     # sequenctial model
     model = meta_model.temporal_net()
     # model = multi_gpu_model(model, 2)
     print(model.summary())
     model.compile(optimizer='adam', loss='huber', metrics=['mean_squared_logarithmic_error'])
-    model.fit(x_input, y_label, epochs=100, batch_size=4, verbose=1)
-    model.save("LSTM_time")
+    model.fit(x_input, y_label[:200], epochs=5, batch_size=128, verbose=1)
+    model.save("LSTM_timen")
 
 
 def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num):
@@ -330,9 +330,12 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num):
 
 x_seq, x_time, n_method = sequence_encoder("72BCEEAE58EE0C9CF812AD78295B2413", "androvid")
 x_steps = 15
+print("x_seq: " + str(x_seq))
+print("x_time: " + str(x_time))
+print("n_method: " + str(n_method))
 test_num = 1000
 # train(x_seq, x_steps, n_method)  # 1155
-# train_temp(x_seq, x_time, x_steps, n_method)
-test("LSTM_3", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num)
+train_temp(x_seq, x_time, x_steps, n_method)
+# test("LSTM_3n", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num)
 # x = array([50, 12, 43, 534, 1313, 4, 14, 2040, 4, 14, 2040, 4, 14, 2040, 439, 534, 23, 64, 128, 1698])
 # train(x, [23, 64, 128])
