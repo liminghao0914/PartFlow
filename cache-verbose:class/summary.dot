@@ -1,4 +1,0 @@
-digraph "summary" {
-  "classes-enjarify.jar"                             -> "java.base (java.base)";
-  "classes-enjarify.jar"                             -> "not found";
-}

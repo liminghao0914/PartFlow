@@ -786,8 +786,9 @@ def getmethod():
   # method = "onClick(Landroid/content/DialogInterface;I)V"
   file_name = class_name[-1]
   path_name = '/'.join(class_name[:-1])
-  os.system("jad -o -sjava -d cache/outputs" + os.path.join("modules/documents",
-            path_name) + "/" + file_name + ".class")
+  jad_cmd = "jad -o -sjava -d ./cache/outputs " + os.path.join("modules/documents",
+            path_name) + "/" + file_name + ".class"
+  os.system(jad_cmd)
   p1 = re.compile(r'[(](.*?)[)]', re.S)
   if method != "":
     try:
@@ -835,7 +836,7 @@ def getmethod():
         print("undefind type name: " + type_name)
       read_flag = False
       depth = 0
-      f = open(file_name.split("$")[0] + ".java")
+      f = open("cache/outputs/" + file_name.split("$")[0] + ".java")
       line = f.readline()
       matches = []
       tmp_str = ""
@@ -869,10 +870,10 @@ def getmethod():
         line = f.readline()
       f.close()
       print(matches)
-    except:
-      print("error getmethod")
+    except Exception as e:
+      print(e)
   else:
-    f = open(file_name.split("$")[0] + ".java")
+    f = open("cache/outputs/" + file_name.split("$")[0] + ".java")
     line = f.readline()
     matches = ""
     while line:
