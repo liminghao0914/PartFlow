@@ -723,38 +723,15 @@
       display: none;
     }
 
-    #info-table {
-      /*left: 40px;*/
-      /*top: 70px;*/
-      /*!*height: 25%;*!*/
-      /*min-width: 12%;*/
-      /*position: absolute;*/
-      /*z-index: 10;*/
-      /*background: #f5f8fa;*/
-      /*-webkit-border-top-left-radius: 5px;*/
-      /*-webkit-border-bottom-left-radius: 5px;*/
-      /*-moz-border-radius-topleft: 5px;*/
-      /*-moz-border-radius-bottomleft: 5px;*/
-      /*border-top-left-radius: 5px;*/
-      /*border-bottom-left-radius: 5px;*/
-      /*!*background: #5d6c75e0;*!*/
-      /*color: #dcdcdc;*/
-      /*border-color: black;*/
-    }
-
     #info {
       display: none;
       left: 40px;
       top: 70px;
-      /*height: 25%;*/
-      /*min-width: 12%;*/
       position: absolute;
       z-index: 8;
       background: #f5f8fa;
-      /*background: #5d6c75e0;*/
       color: #dcdcdc;
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-      /*display: none;*/
       border: solid 1px rgba(60, 63, 65, 0.1);
       box-sizing: border-box;
       border-radius: 5px;
@@ -786,12 +763,6 @@
           <el-button icon="el-icon-set-up" type="info" @click="openCode"
             >Source Code</el-button
           ><el-dropdown-menu/><el-dropdown-item/>
-          <!--            <el-dropdown-menu slot="dropdown" placement="bottom">-->
-          <!--                &lt;!&ndash;                <el-dropdown-item icon="el-icon-time">Time-line</el-dropdown-item>&ndash;&gt;-->
-          <!--                <el-dropdown-item icon="el-icon-document" command="openSourceCode">Source Code</el-dropdown-item>-->
-          <!--                &lt;!&ndash;                <el-dropdown-item icon="el-icon-s-data">Behaviour Distance</el-dropdown-item>&ndash;&gt;-->
-          <!--                &lt;!&ndash;                <el-dropdown-item icon="el-icon-pie-chart">Performance</el-dropdown-item>&ndash;&gt;-->
-          <!--            </el-dropdown-menu>-->
         </el-dropdown>
         <el-dropdown trigger="click">
           <el-button
@@ -800,32 +771,8 @@
             @click="dialogFormVisible = true"
             >Instrumentation</el-button
           ><el-dropdown-menu/><el-dropdown-item/>
-          <!--            <el-dropdown-menu slot="dropdown" placement="bottom">-->
-          <!--                <el-dropdown-item icon="el-icon-upload" @click="dialogFormVisible = true">Upload APK-->
-          <!--                </el-dropdown-item>-->
-          <!--                <el-dropdown-item icon="el-icon-download">Download APKs</el-dropdown-item>-->
-          <!--            </el-dropdown-menu>-->
         </el-dropdown>
-        <!-- <el-dropdown trigger="click">
-          <el-button icon="el-icon-search" type="info">Filters</el-button>
-          <el-dropdown-menu slot="dropdown" placement="bottom">
-            <el-dropdown-item>Method</el-dropdown-item>
-            <el-dropdown-item>Class</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown> -->
         <el-button id="uid-str" slot="reference" type="text">[[uid]]</el-button>
-        <!--        <el-popover-->
-        <!--                title="Panels"-->
-        <!--                placement="bottom-end"-->
-        <!--                trigger="hover"-->
-        <!--                style="margin-left: auto;">-->
-        <!--            <el-button id="uid-str" slot="reference" type="text">[[uid]]</el-button>-->
-        <!--            <el-radio-group fill="#909399" text-color="white" v-model="radio" @change="onChange()">-->
-        <!--                <el-radio-button label="transitions"></el-radio-button>-->
-        <!--                <el-radio-button label="performance"></el-radio-button>-->
-        <!--            </el-radio-group>-->
-        <!--            &lt;!&ndash;            <div id="uid-str" slot="reference">[[uid]]</div>&ndash;&gt;-->
-        <!--        </el-popover>-->
       </div>
       <el-drawer
         :visible.sync="drawer"
@@ -866,20 +813,7 @@
     <div id="no-data"><i class="el-icon-loading"></i>No Data</div>
     <div id="container">
       <div id="left-bar">
-        <!--        <div id="left-top-bar">-->
-        <!--            Selection Panel-->
-        <!--        </div>-->
         <div id="left-top1">
-          <!--            <div id="user-panel">-->
-          <!--                <div id="user-switch">-->
-          <!--                    <el-switch-->
-          <!--                            v-model="value"-->
-          <!--                            inactive-text="Filter Mode"-->
-          <!--                            active-text="Coordinate Mode"-->
-          <!--                            @change="switchUserMode">-->
-          <!--                    </el-switch>-->
-          <!--                </div>-->
-          <!--            </div>-->
           <div id="form">
             <el-form
               :model="ruleForm"

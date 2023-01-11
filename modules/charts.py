@@ -183,18 +183,6 @@ def all_time_chart(pkg) -> Bar:
     return c
 
 
-# 模板渲染
-# @charts.route("/<uid>")
-# def index(uid):
-#     c = all_time_chart(uid)
-#     return Markup(c.render_embed())
-# pass
-
-#
-# @charts.route("/vis")
-# def vis():
-#     return render_template("vis.html")
-
 @charts.route("/functree/<uid>")
 def functree(uid):
     # print(functree)
