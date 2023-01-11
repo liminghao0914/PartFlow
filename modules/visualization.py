@@ -786,7 +786,7 @@ def getmethod():
   # method = "onClick(Landroid/content/DialogInterface;I)V"
   file_name = class_name[-1]
   path_name = '/'.join(class_name[:-1])
-  os.system("jad -o -sjava " + os.path.join("modules/documents",
+  os.system("jad -o -sjava -d cache/outputs" + os.path.join("modules/documents",
             path_name) + "/" + file_name + ".class")
   p1 = re.compile(r'[(](.*?)[)]', re.S)
   if method != "":
