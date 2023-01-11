@@ -790,7 +790,8 @@
           <el-upload
             class="upload-demo"
             ref="upload"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="/uploadAPK"
+            :on-success="handleSuccess"
             :auto-upload="false"
           >
             <el-button slot="trigger" size="small" type="primary"
@@ -1367,8 +1368,8 @@
       maskColor: "rgba(255, 255, 255, 0.8)",
       zlevel: 0,
     };
-    var global_uid = "72BCEEAE58EE0C9CF812AD78295B2413";
-    // var global_uid="null"
+    // var global_uid = "72BCEEAE58EE0C9CF812AD78295B2413";
+    var global_uid="null"
     let global_index = 5;
     let global_vector;
     let global_device;
@@ -1536,7 +1537,6 @@
           header_container.uid = global_uid;
           device_table.uid = global_uid;
           // fetchData(global_uid);
-          // getuserchart();
           fetchDataData(global_uid);
           getchart3();
         },
@@ -1864,7 +1864,6 @@
               dev_table.tableData = result.result;
               device_table.tableData = result.result;
               global_device = result.result;
-              // getuserchart("");
             },
           });
         },
@@ -3437,86 +3436,6 @@
       });
     }
 
-    function getuserchart() {
-      // if (uid.length == 0) {
-      $.ajax({
-        type: "POST",
-        url: "../getuserchart",
-        data: {
-          global_uid: global_uid,
-        },
-        success: function (result) {
-          global_vector = result;
-          chart4.setOption({
-            tooltip: {
-              position: "left",
-              showDelay: 0,
-              formatter: function (params) {
-                return (
-                  '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' +
-                  result.uidList[
-                    result.all.findIndex((array) => array[0] === params.data[0])
-                  ] +
-                  "</div>" +
-                  "Behavior Vector:" +
-                  "<br>" +
-                  "[" +
-                  params.data[0].toFixed(2) +
-                  "," +
-                  params.data[1].toFixed(2) +
-                  "]" +
-                  "<br>"
-                );
-              },
-              extraCssText: "z-index:9999",
-            },
-            title: {
-              text: "User Behavior Vector",
-              // textStyle: {
-              //     color: 'white'
-              // }
-            },
-            xAxis: {
-              scale: true,
-              // axisLabel: {color: 'white'},
-              // axisLine: {lineStyle: {color: 'white'}}
-            },
-            yAxis: {
-              scale: true,
-              // axisLabel: {color: 'white'},
-              // axisLine: {lineStyle: {color: 'white'}}
-            },
-            series: [
-              {
-                type: "effectScatter",
-                symbolSize: 20,
-              },
-              {
-                type: "scatter",
-                data: result.all,
-              },
-            ],
-          });
-          chart4.hideLoading();
-        },
-      });
-      // }
-      // else {
-      //     var vector = global_vector;
-      //     var this_vector = vector.all[vector.uidList.indexOf(uid)]
-      //     console.log(this_vector);
-      //     chart4.setOption({
-      //         series: [{
-      //             type: 'effectScatter',
-      //             symbolSize: 20,
-      //             data: [this_vector],
-      //         }, {
-      //             type: 'scatter',
-      //             data: vector.all,
-      //         }]
-      //     })
-      // }
-    }
 
     chart4.on("click", async function (params) {
       console.log(params);
@@ -3710,6 +3629,7 @@
         uid: global_uid,
         radio: "transitions",
         dialogFormVisible: false,
+        warning: null
       },
       methods: {
         unfold() {
@@ -3726,11 +3646,25 @@
           close_drawer();
         },
         submitUpload() {
-          this.$message({
+          // this.$message({
+          //   message: "The Queue is in processing!",
+          //   type: "success",
+          // });
+          this.dialogFormVisible = false;
+          this.$refs.upload.submit();
+          this.warning = this.$message({
+            type: "warning",
             message: "The Queue is in processing!",
+            duration: 0,
+          });
+        },
+        handleSuccess(){
+          this.fullscreenLoading = false;
+          this.$message({
+            message: "Successfully processed!",
             type: "success",
           });
-          this.dialogFormVisible = false;
+          this.warning.close();
         },
         onChange() {
           if (this.radio == "transitions") {

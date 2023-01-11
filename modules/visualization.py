@@ -1,5 +1,5 @@
 import json
-import pprint
+import subprocess
 import time
 from math import sqrt
 import numpy as np
@@ -59,11 +59,22 @@ def runtime_filter(clazz, threshold, time_list):
       tmp.append(tt)
   return tmp
 
-
 @visualization.route("/vis")
 def vis():
   return render_template("vis.html")
 
+@visualization.route("/uploadAPK", methods=['GET', 'POST'])
+def uploadAPK():
+  if request.method == 'POST':
+    f = request.files['file']
+    f.save(os.path.join('./cache/apks/', f.filename))
+    f_name = f.filename.split(".")[0]
+    if not os.path.exists("./modules/documents/" + f_name + ".jar"):
+      enjarify = subprocess.Popen("enjarify ./cache/apks/"  + f.filename + " -o ./modules/documents/"+ f_name + ".jar", shell=True)
+      er = enjarify.wait()
+    jar = subprocess.Popen("cd ./modules/documents/ && jar -xvf " + f_name + ".jar", shell=True)
+    jr = jar.wait()
+  return jsonify(result="success")
 
 @visualization.route("/find_mongodb", methods=['GET', 'POST'])
 def find_mongodb():
@@ -958,26 +969,3 @@ def getchart3():
     if runtime > 50:
       runtime_list.append([method, runtime])
   return jsonify({"result": runtime_list, "cm": cm_dict})
-
-
-@visualization.route('/getuserchart', methods=['GET', 'POST'])
-def getuserchart():
-  global_uid = request.form.get("global_uid")
-  p_list = []
-  matrix_list = []
-  uid_list = []
-  for device in mydevices.find({}):
-    uid = device.get("uid")
-    try:
-      # p_list.append(euclidean_dist_one(uid))
-      result = euclidean_dist(global_uid, uid)
-      p_list.append(result["vector"])
-      matrix_list.append(result["matrix"])
-      uid_list.append(uid)
-    except:
-      print(uid)
-  return jsonify({
-      "matrix_list": matrix_list,
-      "all": p_list,
-      "uidList": uid_list
-  })
