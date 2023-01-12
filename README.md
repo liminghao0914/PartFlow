@@ -1,7 +1,7 @@
 # PartFlow: A Visualization Tool for Application Partitioning and Workload Offloading in Mobile Edge Computing
 This software, PartFlow, is designed to support the analysis of components in mobile applications from multiple aspects and effectively helps researchers make partitioning and offloading algorithms. By the binary instrument of mobile applications, PartFlow collects application component data from user devices remotely. We design several interactive diagrams to evaluate the component performances and indicate the transition patterns based on the gathered data. Further, PartFlow enables the user to forecast the probability based on a deep learning (DL) measure of an execution sequence for some algorithms’ purposes. 
 
-[![Build Status](https://travis-ci.com/username/project-title.svg?branch=master)](https://travis-ci.com/username/project-title)
+<!-- [![Build Status](https://travis-ci.com/username/project-title.svg?branch=master)](https://travis-ci.com/username/project-title) -->
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/liminghao0914/PartFlow/blob/master/LICENSE)
 
 ## Table of Contents
