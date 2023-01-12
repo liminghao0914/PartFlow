@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="32.0dip" android:layout_height="32.0dip"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:gravity="center_vertical" android:id="@id/rv_record_sort_btn" android:background="@drawable/add_sort_btn_bg1" android:layout_width="32.0dip" android:layout_height="32.0dip" />
-    <TextView android:layout_gravity="center" android:id="@id/rv_record_sort_tv" android:background="@drawable/confirm_color" android:layout_width="24.0dip" android:layout_height="24.0dip" />
-</FrameLayout>

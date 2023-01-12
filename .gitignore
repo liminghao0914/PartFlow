@@ -9,5 +9,5 @@ venv/*
 test/*
 
 modules/documents/*
-cache/apks/
-cache/outputs/
+cache/apks/*
+cache/outputs/*

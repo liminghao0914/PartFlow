@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:paddingTop="16.0dip" android:paddingRight="12.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:textSize="16.0sp" android:ellipsize="end" android:gravity="center" android:id="@id/rv_record_sort_btn" android:background="@drawable/sort_item_rv_bg" android:paddingLeft="6.0dip" android:paddingRight="6.0dip" android:layout_width="fill_parent" android:layout_height="28.0dip" android:minWidth="56.0dip" android:maxLines="1" />
-</LinearLayout>

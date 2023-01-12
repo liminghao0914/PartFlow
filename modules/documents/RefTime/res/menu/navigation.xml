@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:icon="@drawable/record" android:id="@id/record_fragment" android:title="@string/Record" />
-    <item android:icon="@drawable/statics" android:id="@id/statistic_fragment" android:title="@string/Statistics" />
-    <item android:icon="@drawable/plan" android:id="@id/re_plan_fragment" android:title="@string/Replay" />
-</menu>
