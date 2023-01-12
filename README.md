@@ -54,3 +54,19 @@ Then, make 'jad' executable by
 All dependencies are imported by static files. To set up the PartFlow system, we can just install all python modules by
 
     pip install -r requirements.txt
+
+## Usage
+After installation, we can easily run the system by
+
+    python run.py
+    
+## Examples
+Watch the two video below to gain the basic capacity and functionality of PartFlow:
+
+## Screenshots
+
+## License
+Include the license for your project, so others know how they can use it.
+
+## Acknowledgements
+Thank the user for visiting your project and encourage them to contribute.
