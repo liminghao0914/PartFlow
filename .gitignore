@@ -1,13 +1,15 @@
 *.DS_Store
 *__pycache__*
 *.pyc
-*.java
-*.apk
-*.jar
+# *.java
+# *.apk
+# *.jar
 *.class
 venv/*
-test/*
+test/*.*
 
 modules/documents/*
-cache/apks/*
-cache/outputs/*
+# cache/apks/
+# cache/outputs/
+
+!__init__.py
