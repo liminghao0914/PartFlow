@@ -59,7 +59,7 @@ After installation, we can easily run the system by
 Watch the two video below to gain the basic capacity and functionality of PartFlow:
 
 ## Screenshots
-
+![Default Graph](https://github.com/liminghao0914/PartFlow/blob/master/screenshots/overview_defaultgrpah.png)
 
 ## License
 Include the license for your project, so others know how they can use it.
