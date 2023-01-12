@@ -1368,8 +1368,8 @@
       maskColor: "rgba(255, 255, 255, 0.8)",
       zlevel: 0,
     };
-    // var global_uid = "72BCEEAE58EE0C9CF812AD78295B2413";
-    var global_uid="null"
+    var global_uid = "72BCEEAE58EE0C9CF812AD78295B2413";
+    // var global_uid="null"
     let global_index = 5;
     let global_vector;
     let global_device;
@@ -1743,6 +1743,8 @@
           this.tableData = [this.tableData[$index]];
           status_table.loading = true;
           close_drawer();
+          mid2_topbar.close();
+          sum_topbar.close();
           $.ajax({
             type: "POST",
             url: "../getindexdata",
@@ -2064,30 +2066,8 @@
       // getdynamictimeline();
     }
 
-    function default_graph() {
-      markov.showLoading(loadingStyle);
-      bar.showLoading(loadingStyle);
-      gettimeline();
-      getchart3();
-      $.ajax({
-        type: "GET",
-        url: "../getdata/" + global_uid,
-        dataType: "json",
-        success: function (result) {
-          markov.setOption(result);
-          $.ajax({
-            type: "POST",
-            url: "../getdata/default",
-            dataType: "json",
-            data: {
-              uid: global_uid,
-              pkg: global_package,
-              categories: result.series[0].categories,
-            },
-            success: function (result) {
-              const links = result["links"];
-              const nodes = result["nodes"];
-              markov.setOption({
+    function initGraph(links, nodes){
+      markov.setOption({
                 series: [
                   {
                     links: links,
@@ -2164,6 +2144,33 @@
                   },
                 },
               });
+              
+    }
+
+    function default_graph() {
+      markov.showLoading(loadingStyle);
+      bar.showLoading(loadingStyle);
+      gettimeline();
+      getchart3();
+      $.ajax({
+        type: "GET",
+        url: "../getdata/" + global_uid,
+        dataType: "json",
+        success: function (result) {
+          markov.setOption(result);
+          $.ajax({
+            type: "POST",
+            url: "../getdata/default",
+            dataType: "json",
+            data: {
+              uid: global_uid,
+              pkg: global_package,
+              categories: result.series[0].categories,
+            },
+            success: function (result) {
+              const links = result["links"];
+              const nodes = result["nodes"];
+              initGraph(links, nodes);
               global_markov = markov.getOption().series[0];
               footer.nodes_num = nodes.length;
               footer.links_num = links.length;
@@ -3249,10 +3256,12 @@
       getmethod(class_name, method_name);
       getchart1(params.data.name);
       getchart2(params.data.name);
-      let right2Bar = document.getElementById("right2-bar");
-      right2Bar.style.display = "block";
-      right2Bar.style.left = global_mouse.x + "px";
-      tree.resize();
+      setTimeout(() => {
+        let right2Bar = document.getElementById("right2-bar");
+        right2Bar.style.display = "block";
+        right2Bar.style.left = global_mouse.x + "px";
+        tree.resize();
+      }, 100);
       // console.log(global_mouse)
     });
 
@@ -3630,6 +3639,12 @@
         radio: "transitions",
         dialogFormVisible: false,
         warning: null
+      },
+      created() {
+        this.$message({
+          message: "Default Graph Loaded.",
+          type: "success",
+        });
       },
       methods: {
         unfold() {
