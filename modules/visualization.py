@@ -15,6 +15,7 @@ from scipy import sparse
 from scipy.spatial.distance import cityblock
 
 from modules.charts import getname, serial, serial_T, all_methods_count, model_S, model_T
+from config import *
 
 visualization = Blueprint("visualization", __name__)
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -67,12 +68,12 @@ def vis():
 def uploadAPK():
   if request.method == 'POST':
     f = request.files['file']
-    f.save(os.path.join('./cache/apks/', f.filename))
+    f.save(os.path.join(APK_FOLDER, f.filename))
     f_name = f.filename.split(".")[0]
-    if not os.path.exists("./modules/documents/" + f_name + ".jar"):
-      enjarify = subprocess.Popen("enjarify ./cache/apks/"  + f.filename + " -o ./modules/documents/"+ f_name + ".jar", shell=True)
+    if not os.path.exists(CLASS_FOLDER + f_name + ".jar"):
+      enjarify = subprocess.Popen("enjarify " + APK_FOLDER  + f.filename + " -o " + CLASS_FOLDER + f_name + ".jar", shell=True)
       er = enjarify.wait()
-    jar = subprocess.Popen("cd ./modules/documents/ && jar -xvf " + f_name + ".jar", shell=True)
+    jar = subprocess.Popen("cd "+CLASS_FOLDER+" && jar -xvf " + f_name + ".jar", shell=True)
     jr = jar.wait()
   return jsonify(result="success")
 
@@ -108,7 +109,7 @@ def search_date():
   def get_index(lst=None, item=''):
     return [index for (index, value) in enumerate(lst) if value == item]
 
-  start_index = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')
+  start_index = get_index(tlist_T[1], START_METHOD)
   # start_index = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')
   tlist_sequential = []
   for i in range(len(start_index) - 1):
@@ -142,7 +143,7 @@ def fetch_date():
   def get_index(lst=None, item=''):
     return [index for (index, value) in enumerate(lst) if value == item]
 
-  start_index = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')
+  start_index = get_index(tlist_T[1], START_METHOD)
   # start_index = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')
   tlist_sequential = []
   for i in range(len(start_index) - 1):
@@ -178,7 +179,7 @@ def getdynamicdata2():
   def get_index(lst=None, item=''):
     return [index for (index, value) in enumerate(lst) if value == item]
 
-  new_index = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[-1]
+  new_index = get_index(tlist_T[1], START_METHOD)[-1]
   new_tlist = tlist[new_index:]
   tableData = []
   for i, t in enumerate(new_tlist):
@@ -231,7 +232,7 @@ def getdynamictimeline():
   package = request.form.get("pkg")
   tlist = runtime_filter(package, 0, all_timestamp_sort(uid))
   tlist_T = list(map(list, zip(*tlist)))
-  new_index_start = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[-1]
+  new_index_start = get_index(tlist_T[1], START_METHOD)[-1]
   new_tlist = tlist[new_index_start:]
   oritime = new_tlist[0][2]
   depth_list = generate_depth(new_tlist)
@@ -316,8 +317,8 @@ def getdata_default():
     return [index for (index, value) in enumerate(lst) if value == item]
 
   new_tlist = tlist.copy()
-  new_index_start = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[5]
-  new_index_end = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[6]
+  new_index_start = get_index(tlist_T[1], START_METHOD)[5]
+  new_index_end = get_index(tlist_T[1], START_METHOD)[6]
   # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[0]
   # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[1]
   new_tlist = tlist[new_index_start:new_index_end]
@@ -432,9 +433,9 @@ def getindexdata():
     return [index for (index, value) in enumerate(lst) if value == item]
 
   new_index_start = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
+      tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+      tlist_T[1], START_METHOD)[int(index) + 1]
   # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
   # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
@@ -587,9 +588,9 @@ def getinnerstatus():
   tlist = runtime_filter(package, 0, all_timestamp_sort(uid))
   tlist_T = list(map(list, zip(*tlist)))
   new_index_start = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
+      tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+      tlist_T[1], START_METHOD)[int(index) + 1]
   # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
   # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
@@ -652,9 +653,9 @@ def getinnerstatusfortimeline():
   tlist = runtime_filter(package, 0, all_timestamp_sort(uid))
   tlist_T = list(map(list, zip(*tlist)))
   new_index_start = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
+      tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+      tlist_T[1], START_METHOD)[int(index) + 1]
   # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
   # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
@@ -678,9 +679,9 @@ def gettimeline():
   tlist = runtime_filter(package, 0, all_timestamp_sort(uid))
   tlist_T = list(map(list, zip(*tlist)))
   new_index_start = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
+      tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+      tlist_T[1], START_METHOD)[int(index) + 1]
   # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
   # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
@@ -709,9 +710,9 @@ def getinference():
   tlist = runtime_filter(package, 0, all_timestamp_sort(uid))
   tlist_T = list(map(list, zip(*tlist)))
   new_index_start = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index)]
+      tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
-      tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')[int(index) + 1]
+      tlist_T[1], START_METHOD)[int(index) + 1]
   # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
   # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
@@ -790,14 +791,13 @@ def getmarkovinfer():
 
 @visualization.route('/getmethod', methods=['GET', 'POST'])
 def getmethod():
-  # TODO 支持多种APP
   class_name = request.form.get("class_name").split(".")
   method = request.form.get("method")
   # class_name = "com.androvid.videokit.VideoEditorActivity$3".split(".")
   # method = "onClick(Landroid/content/DialogInterface;I)V"
   file_name = class_name[-1]
   path_name = '/'.join(class_name[:-1])
-  jad_cmd = "jad -o -sjava -d ./cache/outputs " + os.path.join("modules/documents",
+  jad_cmd = "jad -o -sjava -d " + JAD_OUTPUT + " " + os.path.join(CLASS_FOLDER,
             path_name) + "/" + file_name + ".class"
   os.system(jad_cmd)
   p1 = re.compile(r'[(](.*?)[)]', re.S)
@@ -847,7 +847,7 @@ def getmethod():
         print("undefind type name: " + type_name)
       read_flag = False
       depth = 0
-      f = open("cache/outputs/" + file_name.split("$")[0] + ".java")
+      f = open(JAD_OUTPUT + file_name.split("$")[0] + ".java")
       line = f.readline()
       matches = []
       tmp_str = ""
@@ -884,7 +884,7 @@ def getmethod():
     except Exception as e:
       print(e)
   else:
-    f = open("cache/outputs/" + file_name.split("$")[0] + ".java")
+    f = open(JAD_OUTPUT + file_name.split("$")[0] + ".java")
     line = f.readline()
     matches = ""
     while line:

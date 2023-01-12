@@ -6,6 +6,7 @@
 *.jar
 *.class
 venv/*
+test/*
 
 modules/documents/*
 cache/apks/

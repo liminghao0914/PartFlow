@@ -1368,12 +1368,13 @@
       maskColor: "rgba(255, 255, 255, 0.8)",
       zlevel: 0,
     };
-    var global_uid = "72BCEEAE58EE0C9CF812AD78295B2413";
-    // var global_uid="null"
+    // var global_uid = "72BCEEAE58EE0C9CF812AD78295B2413";
+    let global_uid = "null";
     let global_index = 5;
     let global_vector;
     let global_device;
-    let global_package = "androvid";
+    // let global_package = "androvid";
+    let global_package = "";
     let global_markov;
     let global_class;
     let global_mouse;
@@ -2148,6 +2149,8 @@
     }
 
     function default_graph() {
+      global_uid = "72BCEEAE58EE0C9CF812AD78295B2413";
+      global_package = "androvid";
       markov.showLoading(loadingStyle);
       bar.showLoading(loadingStyle);
       gettimeline();
