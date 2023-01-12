@@ -4,7 +4,7 @@ This software, PartFlow, is designed to support the analysis of components in mo
 # Project Title
 
 [![Build Status](https://travis-ci.com/username/project-title.svg?branch=master)](https://travis-ci.com/username/project-title)
-[![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/username/project-title/blob/master/LICENSE)
+[![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/liminghao0914/PartFlow/blob/master/LICENSE)
 
 ## Table of Contents
 - [Download](#download)
