@@ -12,10 +12,7 @@ This software, PartFlow, is designed to support the analysis of components in mo
 - [Installation](#installation)
 - [Usage](#usage)
 - [Examples](#examples)
-- [Troubleshooting](#troubleshooting)
-- [FAQ](#faq)
 - [Screenshots](#screenshots)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Download
