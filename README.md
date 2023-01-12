@@ -59,10 +59,11 @@ After installation, we can easily run the system by
 Watch the two video below to gain the basic capacity and functionality of PartFlow:
 
 ## Screenshots
+Here's the screenshot of PartFlow. To conviently gain the overview, PartFlow will be launched with a default graph.
 ![Default Graph](https://github.com/liminghao0914/PartFlow/blob/master/screenshots/overview_defaultgrpah.png)
 
 ## License
-Include the license for your project, so others know how they can use it.
+Check the license [here](https://github.com/liminghao0914/PartFlow/blob/master/LICENSE).
 
 ## Acknowledgements
-Thank the user for visiting your project and encourage them to contribute.
+Sincere thanks to Prof. CAI, Prof. ZHAO for their supports.
