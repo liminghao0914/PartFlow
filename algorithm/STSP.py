@@ -9,19 +9,19 @@ from keras.models import Sequential
 from keras.utils.np_utils import to_categorical
 import os
 import random
-
 import pymongo
 import numpy as np
 import csv
-
 from sklearn.metrics import mean_squared_log_error
+
+from config import *
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # from keras.utils.multi_gpu_utils import multi_gpu_model
 
 
 def mongodb_process(uid):
-  myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+  myclient = pymongo.MongoClient(MONGODB_HOST)
   mydb = myclient["db"]
   mycol = mydb[uid]
   mydict = {}

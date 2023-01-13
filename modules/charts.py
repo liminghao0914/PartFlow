@@ -28,7 +28,7 @@ all_methods_count = len(serial_T[0])
 
 
 def mongodb_process(uid):
-  myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+  myclient = pymongo.MongoClient(MONGODB_HOST)
   mydb = myclient["db"]
   mycol = mydb[uid]
   mydict = {}

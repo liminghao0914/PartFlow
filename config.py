@@ -5,6 +5,7 @@ import os
 # SERVER_HOST = '127.0.0.1'
 SERVER_HOST = '0.0.0.0'
 SERVER_PORT = '9141'
+MONGODB_HOST = "mongodb://localhost:27017/"
 UPLOAD_FOLDER = 'cache'
 JAD_OUTPUT = "./cache/outputs/"
 APK_FOLDER = "./cache/apks/"

@@ -18,7 +18,7 @@ from modules.charts import getname, serial, serial_T, all_methods_count, model_S
 from config import *
 
 visualization = Blueprint("visualization", __name__)
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+myclient = pymongo.MongoClient(MONGODB_HOST)
 mydb = myclient["db"]
 mydevices = mydb["devices_info"]
 
