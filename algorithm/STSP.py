@@ -296,7 +296,7 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
     # x and y
     x_input_raw = series[idx: idx + n_input]
     y_label = series[idx + n_input]
-    if (pred_step==1):
+    if pred_step==1:
       yhat, y_value = predict(n_input, n_features, model, x_input_raw)
       s_prob += yhat[0][y_label]
       if y_label == y_value:
@@ -351,11 +351,13 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
   print("Average probability: " + str(s_prob / test_num))
 
 
+
+
 x_seq, x_time, n_method = sequence_encoder("72BCEEAE58EE0C9CF812AD78295B2413", "androvid")
 x_steps = 10
-test_num = 100
+test_num = 10000
 # train(x_seq, x_steps, n_method)  # 1155
 # train_temp(x_seq, x_time, x_steps, n_method)
-test("LSTM_v2", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num,10)
+# test("LSTM_v2", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num,10)
 # x = array([50, 12, 43, 534, 1313, 4, 14, 2040, 4, 14, 2040, 4, 14, 2040, 439, 534, 23, 64, 128, 1698])
 # train(x, [23, 64, 128])
