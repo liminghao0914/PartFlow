@@ -258,9 +258,10 @@ def train_temp(series, time, n_input, n_method):
   # sequenctial model
   model = meta_model.temporal_net()
   # model = multi_gpu_model(model, 2)
+  # use gpus
   print(model.summary())
   model.compile(optimizer='adam', loss='huber', metrics=['mean_squared_logarithmic_error'])
-  model.fit(x_input, y_label, epochs=100, batch_size=4, verbose=1)
+  model.fit(x_input, y_label, epochs=10, batch_size=128, verbose=1)
   model.save("LSTM_time")
 
 
@@ -297,8 +298,6 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
     y_label = series[idx + n_input]
     if (pred_step==1):
       yhat, y_value = predict(n_input, n_features, model, x_input_raw)
-      # print("x_input_raw: " + str(x_input_raw))
-      # print("y_label: " + str(y_label))
       s_prob += yhat[0][y_label]
       if y_label == y_value:
         n_acc += 1
@@ -357,6 +356,6 @@ x_steps = 10
 test_num = 100
 # train(x_seq, x_steps, n_method)  # 1155
 # train_temp(x_seq, x_time, x_steps, n_method)
-test("LSTM_v2", "LSTM_timen", x_seq, x_time, x_steps, n_method, test_num,10)
+test("LSTM_v2", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num,10)
 # x = array([50, 12, 43, 534, 1313, 4, 14, 2040, 4, 14, 2040, 4, 14, 2040, 439, 534, 23, 64, 128, 1698])
 # train(x, [23, 64, 128])
