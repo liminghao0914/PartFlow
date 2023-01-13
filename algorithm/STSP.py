@@ -14,7 +14,8 @@ import numpy as np
 import csv
 from sklearn.metrics import mean_squared_log_error
 
-from config import *
+START_METHOD = 'attachBaseContext(Landroid/content/Context;)V#Start'
+MONGODB_HOST = "mongodb://192.168.31.68:27017/"
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # from keras.utils.multi_gpu_utils import multi_gpu_model
@@ -73,7 +74,7 @@ def sequence_encoder(uid, clazz_filter):
   tlist_T = list(map(list, zip(*tlist)))
   # print(tlist_T)
   #     end_index = get_index(tlist_T[1], 'onStop()V#End')
-  start_index = get_index(tlist_T[1], 'attachBaseContext(Landroid/content/Context;)V#Start')
+  start_index = get_index(tlist_T[1], START_METHOD)
   tlist_sequential = []
   for i in range(len(start_index) - 1):
     tlist_sequential.append(tlist[start_index[i]:start_index[i + 1]])
@@ -290,7 +291,7 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
   for i in range(test_num):
     # sequential
     # input test data
-    idx = random.randint(6553, len(series) - n_input - 1)
+    idx = random.randint(59566, len(series) - n_input - 1)
     # x and y
     x_input_raw = series[idx: idx + n_input]
     y_label = series[idx + n_input]
@@ -354,8 +355,8 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
 x_seq, x_time, n_method = sequence_encoder("72BCEEAE58EE0C9CF812AD78295B2413", "androvid")
 x_steps = 10
 test_num = 100
-train(x_seq, x_steps, n_method)  # 1155
+# train(x_seq, x_steps, n_method)  # 1155
 # train_temp(x_seq, x_time, x_steps, n_method)
-# test("LSTM_3n", "LSTM_timen", x_seq, x_time, x_steps, n_method, test_num,10)
+test("LSTM_v2", "LSTM_timen", x_seq, x_time, x_steps, n_method, test_num,10)
 # x = array([50, 12, 43, 534, 1313, 4, 14, 2040, 4, 14, 2040, 4, 14, 2040, 439, 534, 23, 64, 128, 1698])
 # train(x, [23, 64, 128])
