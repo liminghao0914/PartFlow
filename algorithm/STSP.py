@@ -13,9 +13,10 @@ import pymongo
 import numpy as np
 import csv
 from sklearn.metrics import mean_squared_log_error
+import matplotlib.pyplot as plt
 
 START_METHOD = 'attachBaseContext(Landroid/content/Context;)V#Start'
-MONGODB_HOST = "mongodb://192.168.31.68:27017/"
+MONGODB_HOST = "mongodb://localhost:27017/"
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # from keras.utils.multi_gpu_utils import multi_gpu_model
@@ -280,9 +281,9 @@ def predict(n_input, n_features, model, x_input_raw):
 def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, pred_step):
   print("len(series): " + str(len(series)))
   model = keras.models.load_model(model_path)
-  print(model.summary())
+  # print(model.summary())
   model_tmp = keras.models.load_model(model_path_tmp)
-  print(model_tmp.summary())
+  # print(model_tmp.summary())
   # n_input = len(x_user)
   flag = True
   n_features = n_method * 2
@@ -295,7 +296,7 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
     idx = random.randint(59566, len(series) - n_input - 1)
     # x and y
     x_input_raw = series[idx: idx + n_input]
-    y_label = series[idx + n_input]
+    y_label = series[idx + n_input + pred_step - 1]
     if pred_step==1:
       yhat, y_value = predict(n_input, n_features, model, x_input_raw)
       s_prob += yhat[0][y_label]
@@ -307,10 +308,8 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
         yhat, y_value = predict(n_input, n_features, model, x_input_raw)
         if j == pred_step - 1:
           break
-        # x_input_raw = x_input_raw[1:]
-        np.delete(x_input_raw, 0)
-        # x_input_raw.append(y_value)
-        np.append(x_input_raw, y_value)
+        x_input_raw = np.delete(x_input_raw, 0)
+        x_input_raw = np.append(x_input_raw, y_value)
       s_prob += yhat[0][y_label]
       if y_label == y_value:
         n_acc += 1
@@ -350,14 +349,59 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
   print("Total MSLE: " + str(t_msle / test_num))
   print("Average probability: " + str(s_prob / test_num))
 
+def get_accuracy(model_path, model_path_tmp, series, n_input, n_method, test_num, pred_step):
+  model = keras.models.load_model(model_path)
+  # print(model.summary())
+  model_tmp = keras.models.load_model(model_path_tmp)
+  # print(model_tmp.summary())
+  # n_input = len(x_user)
+  flag = True
+  n_features = n_method * 2
+  n_acc = 0
+  s_prob = 0
+  t_msle = 0
+  for i in range(test_num):
+    # sequential
+    # input test data
+    idx = random.randint(59566, len(series) - n_input - 1)
+    # x and y
+    x_input_raw = series[idx: idx + n_input]
+    y_label = series[idx + n_input + pred_step - 1]
+    if pred_step==1:
+      yhat, y_value = predict(n_input, n_features, model, x_input_raw)
+      s_prob += yhat[0][y_label]
+      if y_label == y_value:
+        n_acc += 1
+    else:
+      y_value = 0
+      for j in range(pred_step):
+        yhat, y_value = predict(n_input, n_features, model, x_input_raw)
+        if j == pred_step - 1:
+          break
+        x_input_raw = np.delete(x_input_raw, 0)
+        x_input_raw = np.append(x_input_raw, y_value)
+      s_prob += yhat[0][y_label]
+      if y_label == y_value:
+        n_acc += 1
 
+  return n_acc / test_num
 
+def plot():
+  x_axis = np.arange(1, 21)
+  y_axis = []
+  for i in range(1, 21):
+    y_axis.append(get_accuracy("LSTM_v2", "LSTM_time", x_seq, n_input=10, n_method=n_method, test_num=100, pred_step=i))
+  y_axis = np.array(y_axis)
+  plt.plot(x_axis, y_axis)
+  plt.show()
 
+# if __name__ == '__main__':
 x_seq, x_time, n_method = sequence_encoder("72BCEEAE58EE0C9CF812AD78295B2413", "androvid")
 x_steps = 10
-test_num = 10000
-# train(x_seq, x_steps, n_method)  # 1155
-# train_temp(x_seq, x_time, x_steps, n_method)
-# test("LSTM_v2", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num,10)
-# x = array([50, 12, 43, 534, 1313, 4, 14, 2040, 4, 14, 2040, 4, 14, 2040, 439, 534, 23, 64, 128, 1698])
-# train(x, [23, 64, 128])
+test_num = 100
+plot()
+  # train(x_seq, x_steps, n_method)  # 1155
+  # train_temp(x_seq, x_time, x_steps, n_method)
+  # test("LSTM_v2", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num,10)
+  # x = array([50, 12, 43, 534, 1313, 4, 14, 2040, 4, 14, 2040, 4, 14, 2040, 439, 534, 23, 64, 128, 1698])
+  # train(x, [23, 64, 128])
