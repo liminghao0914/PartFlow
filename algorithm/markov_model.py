@@ -38,10 +38,10 @@ def get_accuracy(test_num, pred_step, uid, series, n_input):
   print('Accuracy: ', n_acc / test_num)
   return n_acc / test_num
 
-def plot(uid, x_seq, n_input):
-  x_axis = np.arange(1, 21)
+def plot(uid, x_seq, n_input, pred_step):
+  x_axis = np.arange(1, pred_step+1)
   y_axis = []
-  for i in range(1, 21):
+  for i in range(1, pred_step+1):
     y_axis.append(get_accuracy(test_num, i, uid, x_seq, n_input))
   y_axis = np.array(y_axis)
   plt.plot(x_axis, y_axis)
@@ -52,5 +52,5 @@ if __name__ == '__main__':
   n_input = 10
   # read markov npz
   markov_model = sparse.load_npz(uid + '_markov.npz').todense()
-  plot(uid, x_seq, n_input)
+  plot(uid, x_seq, n_input, pred_step=30)
   # get_accuracy(test_num, 15, uid, x_seq, n_input)

@@ -399,7 +399,7 @@ def plot():
 x_seq, x_time, n_method = sequence_encoder("72BCEEAE58EE0C9CF812AD78295B2413", "androvid")
 x_steps = 10
 test_num = 100
-plot()
+# plot()
   # train(x_seq, x_steps, n_method)  # 1155
   # train_temp(x_seq, x_time, x_steps, n_method)
   # test("LSTM_v2", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num,10)
