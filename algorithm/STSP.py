@@ -15,8 +15,19 @@ import csv
 from sklearn.metrics import mean_squared_log_error
 import matplotlib.pyplot as plt
 
+physical_devices = tf.config.list_physical_devices('GPU')
+try:
+  # Disable first GPU
+  tf.config.set_visible_devices(physical_devices[1:], 'GPU')
+  logical_devices = tf.config.list_logical_devices('GPU')
+  # Logical device was not created for first GPU
+  assert len(logical_devices) == len(physical_devices) - 1
+except:
+  # Invalid device or cannot modify virtual devices once initialized.
+  print("Invalid device or cannot modify virtual devices once initialized.")
+
 START_METHOD = 'attachBaseContext(Landroid/content/Context;)V#Start'
-MONGODB_HOST = "mongodb://localhost:27017/"
+MONGODB_HOST = "mongodb://192.168.31.68:27017/"
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # from keras.utils.multi_gpu_utils import multi_gpu_model
@@ -383,23 +394,24 @@ def get_accuracy(model_path, model_path_tmp, series, n_input, n_method, test_num
       s_prob += yhat[0][y_label]
       if y_label == y_value:
         n_acc += 1
-
+  print(n_acc / test_num)
   return n_acc / test_num
 
-def plot():
-  x_axis = np.arange(1, 21)
+def LSTM_data(x_seq, n_method, test_num, pred_step):
+  x_axis = np.arange(1, pred_step+1)
   y_axis = []
-  for i in range(1, 21):
-    y_axis.append(get_accuracy("LSTM_v2", "LSTM_time", x_seq, n_input=10, n_method=n_method, test_num=100, pred_step=i))
+  for i in range(1, pred_step+1):
+    y_axis.append(get_accuracy("LSTM_v2", "LSTM_time", x_seq, n_input=10, n_method=n_method, test_num=test_num, pred_step=i))
   y_axis = np.array(y_axis)
-  plt.plot(x_axis, y_axis)
-  plt.show()
+  return x_axis, y_axis
+  # plt.plot(x_axis, y_axis)
+  # plt.show()
 
 # if __name__ == '__main__':
 x_seq, x_time, n_method = sequence_encoder("72BCEEAE58EE0C9CF812AD78295B2413", "androvid")
 x_steps = 10
-test_num = 100
-# plot()
+test_num = 10
+# plot(x_seq, n_method, test_num)
   # train(x_seq, x_steps, n_method)  # 1155
   # train_temp(x_seq, x_time, x_steps, n_method)
   # test("LSTM_v2", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num,10)
