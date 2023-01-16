@@ -237,24 +237,6 @@ def train(series, n_input, n_method):
   # save model
   model.save("LSTM_v2")
 
-  # # make a one step prediction out of sample
-  # x_input = np.array(x_onehot).reshape((1, n_input, n_features))
-  # # raw prediction index
-  # yhat = model.predict(x_input, verbose=0)
-  # print(yhat)
-  # y_index = np.argmax(yhat, axis=1)
-  # print(y_index)
-  # y_value = np.squeeze(y_index)
-  # print(yhat[0][y_value])
-  # print(yhat[0][4400])
-
-  # prediction
-  # series_dist = []
-  # for state in series_set:
-  #     series_dist.append(abs(state - y_value))
-  # # final prediction index
-  # y_predict = series_set[series_dist.index(min(series_dist))]
-  # print(y_predict)
 
 
 def train_temp(series, time, n_input, n_method):
@@ -374,7 +356,7 @@ def get_accuracy(model_path, model_path_tmp, series, n_input, n_method, test_num
   for i in range(test_num):
     # sequential
     # input test data
-    idx = random.randint(59566, len(series) - n_input - 1)
+    idx = random.randint(59566, len(series) - n_input - pred_step - 1)
     # x and y
     x_input_raw = series[idx: idx + n_input]
     y_label = series[idx + n_input + pred_step - 1]
