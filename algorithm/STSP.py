@@ -27,8 +27,8 @@ except:
   print("Invalid device or cannot modify virtual devices once initialized.")
 
 START_METHOD = 'attachBaseContext(Landroid/content/Context;)V#Start'
-# MONGODB_HOST = "mongodb://192.168.31.68:27017/"
-MONGODB_HOST = "mongodb://localhost:27017/"
+MONGODB_HOST = "mongodb://192.168.31.68:27017/"
+# MONGODB_HOST = "mongodb://localhost:27017/"
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # from keras.utils.multi_gpu_utils import multi_gpu_model

@@ -49,11 +49,13 @@ def test2(test_num, pred_step):
     np.save(TEST_RESULT_OUTPUT+'y_log_{i}.npy'.format(i=i), y_log)
     print('Batch {i} finished'.format(i=i))
 
-def comparison(y_lstm, y_markov, y_svm):
+def comparison(y_lstm, y_markov, y_svm, y_nb, y_log):
   x_axis = np.arange(1, pred_step+1)
   plt.plot(x_axis, y_lstm, color='red', marker='o', label='LSTM')
   plt.plot(x_axis, y_markov, color='blue', marker='P', label='MM')
   plt.plot(x_axis, y_svm, color='green', marker='^', label='SVM')
+  plt.plot(x_axis, y_nb, color='orange', marker='s', label='NB')
+  plt.plot(x_axis, y_log, color='purple', marker='D', label='LR')
   # plt.xlabel(r'Number of Prediction Step n ($n \leq 20$')
   plt.xlabel(r'Number of Prediction Step n')
   plt.ylabel(r'Accuracy')
@@ -78,8 +80,10 @@ if __name__ == '__main__':
   pred_step = 20
   test_num = 1000
   # test(test_num, pred_step)
-  test2(test_num, pred_step)
-  # y_lstm=read_npz('y_lstm', TEST_RESULT_OUTPUT)
-  # y_markov=read_npz('y_markov', TEST_RESULT_OUTPUT)
-  # y_svm=read_npz('y_svm', TEST_RESULT_OUTPUT)
-  # comparison(y_lstm,y_svm, y_markov)
+  # test2(test_num, pred_step)
+  y_lstm=read_npz('y_lstm', TEST_RESULT_OUTPUT)
+  y_markov=read_npz('y_markov', TEST_RESULT_OUTPUT)
+  y_svm=read_npz('y_svm', TEST_RESULT_OUTPUT)
+  y_nb=read_npz('y_nb', TEST_RESULT_OUTPUT)
+  y_log=read_npz('y_log', TEST_RESULT_OUTPUT)
+  comparison(y_lstm,y_svm, y_markov, y_nb, y_log)
