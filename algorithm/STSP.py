@@ -27,7 +27,8 @@ except:
   print("Invalid device or cannot modify virtual devices once initialized.")
 
 START_METHOD = 'attachBaseContext(Landroid/content/Context;)V#Start'
-MONGODB_HOST = "mongodb://192.168.31.68:27017/"
+# MONGODB_HOST = "mongodb://192.168.31.68:27017/"
+MONGODB_HOST = "mongodb://localhost:27017/"
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # from keras.utils.multi_gpu_utils import multi_gpu_model
@@ -173,7 +174,15 @@ class Model():
     model = Sequential()
     # model.add(Embedding(batch_size=1, input_length=self.n_input))
     # model.add(LSTM(128, dropout=0.2, recurrent_dropout=0.2))
-    model.add(LSTM(128, activation='tanh', input_shape=(self.n_input, self.n_features)))
+    model.add(LSTM(128,
+                   activation='tanh',
+                   recurrent_activation="hard_sigmoid",
+                   use_bias=True,
+                   kernel_initializer="glorot_uniform",
+                   recurrent_initializer="orthogonal",
+                   bias_initializer="zeros",
+                   unit_forget_bias=True,
+                   input_shape=(self.n_input, self.n_features)))
     model.add(Dense(self.n_features, activation='softmax'))
     return model
 
@@ -238,7 +247,6 @@ def train(series, n_input, n_method):
   model.save("LSTM_v2")
 
 
-
 def train_temp(series, time, n_input, n_method):
   series_onehot = to_categorical(series, num_classes=n_method * 2)
   n_features = n_method * 2
@@ -290,7 +298,7 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
     # x and y
     x_input_raw = series[idx: idx + n_input]
     y_label = series[idx + n_input + pred_step - 1]
-    if pred_step==1:
+    if pred_step == 1:
       yhat, y_value = predict(n_input, n_features, model, x_input_raw)
       s_prob += yhat[0][y_label]
       if y_label == y_value:
@@ -342,6 +350,7 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
   print("Total MSLE: " + str(t_msle / test_num))
   print("Average probability: " + str(s_prob / test_num))
 
+
 def get_accuracy(model_path, model_path_tmp, series, n_input, n_method, test_num, pred_step):
   model = keras.models.load_model(model_path)
   # print(model.summary())
@@ -360,7 +369,7 @@ def get_accuracy(model_path, model_path_tmp, series, n_input, n_method, test_num
     # x and y
     x_input_raw = series[idx: idx + n_input]
     y_label = series[idx + n_input + pred_step - 1]
-    if pred_step==1:
+    if pred_step == 1:
       yhat, y_value = predict(n_input, n_features, model, x_input_raw)
       s_prob += yhat[0][y_label]
       if y_label == y_value:
@@ -379,23 +388,26 @@ def get_accuracy(model_path, model_path_tmp, series, n_input, n_method, test_num
   print(n_acc / test_num)
   return n_acc / test_num
 
+
 def LSTM_data(x_seq, n_method, test_num, pred_step):
   x_axis = np.arange(1, pred_step+1)
   y_axis = []
   for i in range(1, pred_step+1):
-    y_axis.append(get_accuracy("LSTM_v2", "LSTM_time", x_seq, n_input=10, n_method=n_method, test_num=test_num, pred_step=i))
+    y_axis.append(get_accuracy("LSTM_v2", "LSTM_time", x_seq, n_input=10,
+                  n_method=n_method, test_num=test_num, pred_step=i))
   y_axis = np.array(y_axis)
   return x_axis, y_axis
   # plt.plot(x_axis, y_axis)
   # plt.show()
+
 
 # if __name__ == '__main__':
 x_seq, x_time, n_method = sequence_encoder("72BCEEAE58EE0C9CF812AD78295B2413", "androvid")
 x_steps = 10
 test_num = 10
 # plot(x_seq, n_method, test_num)
-  # train(x_seq, x_steps, n_method)  # 1155
-  # train_temp(x_seq, x_time, x_steps, n_method)
-  # test("LSTM_v2", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num,10)
-  # x = array([50, 12, 43, 534, 1313, 4, 14, 2040, 4, 14, 2040, 4, 14, 2040, 439, 534, 23, 64, 128, 1698])
-  # train(x, [23, 64, 128])
+# train(x_seq, x_steps, n_method)  # 1155
+# train_temp(x_seq, x_time, x_steps, n_method)
+# test("LSTM_v2", "LSTM_time", x_seq, x_time, x_steps, n_method, test_num,10)
+# x = array([50, 12, 43, 534, 1313, 4, 14, 2040, 4, 14, 2040, 4, 14, 2040, 439, 534, 23, 64, 128, 1698])
+# train(x, [23, 64, 128])
