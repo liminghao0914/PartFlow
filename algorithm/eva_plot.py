@@ -86,4 +86,4 @@ if __name__ == '__main__':
   y_svm=read_npz('y_svm', TEST_RESULT_OUTPUT)
   y_nb=read_npz('y_nb', TEST_RESULT_OUTPUT)
   y_log=read_npz('y_log', TEST_RESULT_OUTPUT)
-  comparison(y_lstm,y_svm, y_markov, y_nb, y_log)
+  comparison(y_lstm,y_markov, y_svm, y_nb, y_log)
