@@ -1113,7 +1113,7 @@
                     <el-tooltip
                       class="item"
                       effect="dark"
-                      content="At least 15 nodes"
+                      content="At least 10 nodes"
                       placement="top-end"
                       :disabled="!disabled"
                     >
@@ -2774,7 +2774,7 @@
           value: 1,
         });
       }
-      if (nodes.length > 14) {
+      if (nodes.length > 9) {
         if (pred.disabled) {
           pred.$notify.info({
             title: "Tips",

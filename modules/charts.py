@@ -15,6 +15,7 @@ import pprint
 from sklearn.metrics import mean_squared_log_error, balanced_accuracy_score, r2_score
 
 from modules.collector import *
+from config import *
 
 # Uncomment the line below to make GPU unavaliable
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
