@@ -723,7 +723,7 @@ def getinference():
   method_time = []
   timestamp = selected_tlist_T[2]
   n_features = all_methods_count * 2
-  n_input = 15
+  n_input = 10
   for i in range(len(timestamp) - 1):
     method_time.append(round(((timestamp[i + 1] - timestamp[i]) / 1000000), 2))
   for item in selected_tlist:
@@ -759,10 +759,10 @@ def getinference():
 def getmarkovinfer():
   uid = request.form.get("uid")
   ori_tlist = json.loads(request.form.get("selected_tlist"))
-  selected_tlist = ori_tlist[-15:]
+  selected_tlist = ori_tlist[-10:]
   x_input_data = []
   n_features = all_methods_count * 2
-  n_input = 15
+  n_input = 10
   for name in selected_tlist:
     if "#Start" in name:
       x_input_data.append(int(serial[get_index(serial_T[0], name.split("#Start")[0])[0]][1]))

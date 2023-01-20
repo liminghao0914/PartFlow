@@ -624,6 +624,10 @@
       width: 20%;
     }
 
+    #pred .el-table th {
+      padding: 3px;
+    }
+
     .el-form-item__label {
       color: white;
     }
@@ -1104,10 +1108,10 @@
                 :cell-style="{padding: '0'}"
                 style="font-size: 5px"
               >
-                <el-table-column prop="infer" label="Prediction based on LSTM">
-                  <el-table-column prop="item" label="Item" width="100">
+                <el-table-column prop="infer" label="Powered by LSTM">
+                  <el-table-column prop="item" label="Item" width="55">
                   </el-table-column>
-                  <el-table-column prop="desc" label="Description">
+                  <el-table-column prop="desc" label="Desc.">
                   </el-table-column>
                   <template slot="header" slot-scope="scope">
                     <el-tooltip
@@ -1120,7 +1124,7 @@
                       <el-switch
                         v-model="engineOn"
                         active-text=""
-                        inactive-text="Prediction based on LSTM"
+                        inactive-text="Powered by LSTM"
                         :disabled="disabled"
                       >
                       </el-switch>
@@ -2734,6 +2738,7 @@
       const ori_links = detail_markov_series.links;
       const node = ori_nodes[node_index];
       const nodes = ori_nodes.filter((array) => array.symbol == "roundRect");
+      console.log(ori_nodes);
       const ns_nodes = ori_nodes.filter(
         (array) =>
           array.name != node_name &&
@@ -2774,51 +2779,7 @@
           value: 1,
         });
       }
-      if (nodes.length > 9) {
-        if (pred.disabled) {
-          pred.$notify.info({
-            title: "Tips",
-            message: "LSTM Prediction is available!",
-            offset: 50,
-          });
-          pred.disabled = false;
-        }
-        if (pred.engineOn) {
-          pred.loading = true;
-          var selected_node_list = new Array();
-          for (let i = 0; i < nodes.length; i++) {
-            console.log(nodes[i].name);
-            selected_node_list.push(nodes[i].name);
-          }
-          $.ajax({
-            type: "POST",
-            url: "../getmarkovinfer",
-            dataType: "json",
-            data: {
-              uid: global_uid,
-              selected_tlist: JSON.stringify(selected_node_list),
-            },
-            success: function (result) {
-              console.log(result);
-              pred.tableData = [
-                {
-                  item: "name",
-                  desc: result.name,
-                },
-                {
-                  item: "runtime",
-                  desc: result.time,
-                },
-                {
-                  item: "probability",
-                  desc: result.probability,
-                },
-              ];
-              pred.loading = false;
-            },
-          });
-        }
-      }
+      
       const targets = global_markov.links.filter(
         (array) => array.source === node_name
       );
@@ -2909,6 +2870,9 @@
       const node_name = params.data.name;
       const detail_sankey_option = detail_sankey.getOption();
       const detail_sankey_series = detail_sankey.getOption().series[0];
+      const selected_node_list = detail_sankey_series.data.filter(
+        (array) => array.itemStyle.color === "red"
+      );
       const node_index = detail_sankey_series.data.findIndex(
         (array) => array.name === node_name
       );
@@ -3064,6 +3028,49 @@
       markov.setOption({
         series: [{ links: all_links, data: all_nodes }],
       });
+
+      // get ai prediction
+      if (selected_node_list.length > 8) {
+        if (pred.disabled) {
+          pred.$notify.info({
+            title: "Tips",
+            message: "LSTM Prediction is available!",
+            offset: 50,
+          });
+          pred.disabled = false;
+        }
+        if (pred.engineOn) {
+          pred.loading = true;
+          var selected_nodes = new Array();
+          for (let i = 0; i < selected_node_list.length; i++) {
+            console.log(selected_node_list[i].name);
+            selected_nodes.push(selected_node_list[i].name);
+          }
+          $.ajax({
+            type: "POST",
+            url: "../getmarkovinfer",
+            dataType: "json",
+            data: {
+              uid: global_uid,
+              selected_tlist: JSON.stringify(selected_nodes),
+            },
+            success: function (result) {
+              console.log(result);
+              pred.tableData = [
+                {
+                  item: "name",
+                  desc: result.name,
+                },
+                {
+                  item: "prob.",
+                  desc: result.probability,
+                },
+              ];
+              pred.loading = false;
+            },
+          });
+        }
+      }
     });
 
     tree.setOption({

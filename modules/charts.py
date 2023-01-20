@@ -20,8 +20,8 @@ from config import *
 # Uncomment the line below to make GPU unavaliable
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 charts = Blueprint("charts", __name__)
-model_S = keras.models.load_model("algorithm/LSTM_3n")
-model_T = keras.models.load_model("algorithm/LSTM_timen")
+model_S = keras.models.load_model("algorithm/LSTM_v2")
+model_T = keras.models.load_model("algorithm/LSTM_time")
 serial = csv.reader(open("./cache/methods_id.csv"))
 serial_T = list(map(list, zip(*serial)))
 serial = list(map(list, zip(*serial_T)))
@@ -266,7 +266,7 @@ def getpred(uid):
     # print(model_S.summary())
     # print(model_T.summary())
     n_features = all_methods_count * 2
-    n_input = 15
+    n_input = 10
     # x_input_data = data[-n_input:]
     x_input_raw = []
     method_time = []
