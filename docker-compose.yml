@@ -1,0 +1,7 @@
+version: "3"
+services:
+  web:
+    build: .
+    command: python3 run.py
+    ports:
+      - "9141:9141"
