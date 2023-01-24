@@ -19,6 +19,8 @@ This software, PartFlow, is designed to support the analysis of components in mo
 ## Quick Start (Recommended)
 If you want a quick start without any environment issue, please download this VM image [here](). By using this image, you will get a smooth experience on using PartFlow without any configuration and input-command. 
 
+If PartFlow does not start up after login, please refer to troubleshooting for more information. Thank you for your time.
+
 If you want to deploy the system in your own local environment, please read the following context. (only for Liux)
 
 ## Requirements
