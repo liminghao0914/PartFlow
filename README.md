@@ -49,9 +49,24 @@ Then, make 'jad' executable by
     cp -r jad /usr/local/bin
 
 ## Installation
-All dependencies are imported by static files. To set up the PartFlow system, we can just install all python modules by
+All dependencies are imported by static files. To set up the PartFlow system, we can just install all python modules in your global envrionment by
 
     pip install -r requirements.txt
+
+### Virtual Environment
+
+To set up and use a virtual environment for PartFlow, follow these instructions:
+
+1. Activate the virtual environment by running `source env_mmsys/bin/activate`.
+
+2. Same as the previous instruction, install the required packages by running `pip install -r requirements.txt`. This will install all the packages listed in the `requirements.txt` file.
+
+3. When you're done working on the project, deactivate the virtual environment by running `deactivate`.
+
+Note:
+- When you activate the virtual environment, your shell's prompt will change to indicate that you're in a virtual environment.
+- You should always use the virtual environment when working on the project, so that the packages you install are isolated from the system-wide packages.
+- If you need to add any new package to your environment, you can run `pip install <package-name>` and then `pip freeze > requirements.txt` to update the requirements file.
 
 ## Usage
 After installation, we can easily run the system by
