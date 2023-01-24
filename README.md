@@ -11,6 +11,7 @@ This software, PartFlow, is designed to support the analysis of components in mo
 - [Usage](#usage)
 - [Examples](#examples)
 - [Screenshots](#screenshots)
+- [Troubleshooting](#troubleshooting)
 - [License](#license)
 
 ## Download
@@ -84,6 +85,28 @@ Watch the two videos below to gain the basic capacity and functionality of PartF
 ## Screenshots
 Here's the screenshot of PartFlow. To conviently gain the overview, PartFlow will be launched with a default graph.
 ![Default Graph](https://github.com/liminghao0914/PartFlow/blob/master/screenshots/overview_defaultgrpah.png)
+
+## Troubleshooting
+If you find any trouble using VM image, it would probably be casued by missing AVX, which is required by Tensorflow library.
+- Please refer to [https://stackoverflow.com/questions/65780506/how-to-enable-avx-avx2-in-virtualbox-6-1-16-with-ubuntu-20-04-64bit](https://stackoverflow.com/questions/65780506/how-to-enable-avx-avx2-in-virtualbox-6-1-16-with-ubuntu-20-04-64bit) to enable AVX in your virtualbox.
+
+If you run into any issues while setting up or running the project in your local environment, please check the following:
+
+- Make sure you have the correct version of Python installed. You can check the version by running `python --version` in the command line.
+
+- Check that you have all the required dependencies installed. You can check the dependencies listed in the `requirements.txt` file.
+
+- Make sure you have activated the virtual environment before running the project.
+
+- Check that the path to the script or environment is correct.
+
+- If the project uses a database, make sure the database is running and properly configured.
+
+- Make sure the project has the right permissions to access the required files and directories.
+
+- Check the logs for any error messages.
+
+- If you still can't find a solution to your issue, please open an issue in the GitHub repository and provide as much information as possible about the problem, including error messages and the steps you've taken to troubleshoot.
 
 ## License
 Check the license [here](https://github.com/liminghao0914/PartFlow/blob/master/LICENSE).
