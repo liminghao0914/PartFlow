@@ -16,8 +16,8 @@ This software, PartFlow, is designed to support the analysis of components in mo
 ## Download
     git clone https://github.com/liminghao0914/PartFlow.git
 
-## Quick Start
-If you want a quick start without any environment issue, please download this VM image [here]().
+## Quick Start (Recommended)
+If you want a quick start without any environment issue, please download this VM image [here](). By using this image, you will get a smooth experience on using PartFlow without any configuration and input-command. 
 
 ## Requirements
 ### Python3.10
