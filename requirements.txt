@@ -10,3 +10,4 @@ pymongo==4.3.3
 scikit_learn==1.2.0
 scipy==1.10.0
 tensorflow==2.11.0
+pyecharts==1.9.1

@@ -1,0 +1,11 @@
+[Unit]
+Description=This shell script is used to activate partflow service.
+After=network.target
+ConditionPathExists=/home/liminghao/run_partflow.sh
+
+[Service]
+User=root
+ExecStart=/home/liminghao/run_partflow.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -5,7 +5,7 @@
 # *.apk
 # *.jar
 *.class
-venv/*
+venv_mmsys/*
 test/*.*
 
 modules/documents/*
