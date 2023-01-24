@@ -66,7 +66,6 @@ To set up and use a virtual environment for PartFlow, follow these instructions:
 Note:
 - When you activate the virtual environment, your shell's prompt will change to indicate that you're in a virtual environment.
 - You should always use the virtual environment when working on the project, so that the packages you install are isolated from the system-wide packages.
-- If you need to add any new package to your environment, you can run `pip install <package-name>` and then `pip freeze > requirements.txt` to update the requirements file.
 
 ## Usage
 After installation, we can easily run the system by
