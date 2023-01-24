@@ -100,7 +100,7 @@ If you run into any issues while setting up or running the project in your local
 
 - Check that the path to the script or environment is correct.
 
-- If the project uses a database, make sure the database is running and properly configured.
+- If the project uses a database, make sure the database is running and properly configured. Please refer to [user-component-dataset](https://github.com/liminghao0914/user-component-dataset) for more information.
 
 - Make sure the project has the right permissions to access the required files and directories.
 
