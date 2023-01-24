@@ -14,7 +14,7 @@ from pyecharts.charts import Graph
 from scipy import sparse
 from scipy.spatial.distance import cityblock
 
-from modules.charts import getname, serial, serial_T, all_methods_count, model_S, model_T
+from modules.charts import getname, serial, serial_T, all_methods_count, model_S
 from config import *
 
 visualization = Blueprint("visualization", __name__)
@@ -742,16 +742,16 @@ def getinference():
     y_name = serial[y_value + 1][0] + "#Start"
   else:
     y_name = serial[y_value - 1 - all_methods_count][0] + "#End"
-  yhat_tmp = model_T.predict(x_input, verbose=0)
-  y_value_tmp = np.squeeze(yhat_tmp)
-  if y_value_tmp < 0:
-    y_value_tmp = 0
-  y_label_tmp = round(((new_tlist[mindex_start + 1][2] - new_tlist[mindex_start][2]) / 1000000), 2)
+  # yhat_tmp = model_T.predict(x_input, verbose=0)
+  # y_value_tmp = np.squeeze(yhat_tmp)
+  # if y_value_tmp < 0:
+  #   y_value_tmp = 0
+  # y_label_tmp = round(((new_tlist[mindex_start + 1][2] - new_tlist[mindex_start][2]) / 1000000), 2)
   return jsonify({
       "name": y_name,
       "probability": str(yhat[0][y_value]),
-      "time": str(y_value_tmp),
-      "labeltime": str(y_label_tmp)
+      # "time": str(y_value_tmp),
+      # "labeltime": str(y_label_tmp)
   })
 
 
@@ -759,6 +759,10 @@ def getinference():
 def getmarkovinfer():
   uid = request.form.get("uid")
   ori_tlist = json.loads(request.form.get("selected_tlist"))
+  if len(ori_tlist) < 10:
+    # fill the list
+    for i in range(10 - len(ori_tlist)):
+      ori_tlist.insert(0, ori_tlist[0])
   selected_tlist = ori_tlist[-10:]
   x_input_data = []
   n_features = all_methods_count * 2
@@ -778,14 +782,14 @@ def getmarkovinfer():
     y_name = serial[y_value + 1][0] + "#Start"
   else:
     y_name = serial[y_value - 1 - all_methods_count][0] + "#End"
-  yhat_tmp = model_T.predict(x_input, verbose=0)
-  y_value_tmp = np.squeeze(yhat_tmp)
-  if y_value_tmp < 0:
-    y_value_tmp = 0
+  # yhat_tmp = model_T.predict(x_input, verbose=0)
+  # y_value_tmp = np.squeeze(yhat_tmp)
+  # if y_value_tmp < 0:
+  #   y_value_tmp = 0
   return jsonify({
       "name": y_name,
       "probability": str(yhat[0][y_value]),
-      "time": str(y_value_tmp),
+      # "time": str(y_value_tmp),
   })
 
 

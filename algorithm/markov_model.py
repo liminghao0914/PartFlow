@@ -4,7 +4,7 @@ from scipy import sparse
 import sys
 import matplotlib.pyplot as plt
 
-from STSP import x_seq, test_num
+from algorithm.LSTM import x_seq, test_num
 
 uid = '72BCEEAE58EE0C9CF812AD78295B2413'
 n_input = 10

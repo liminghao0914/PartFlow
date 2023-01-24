@@ -3,7 +3,7 @@ from matplotlib.ticker import MaxNLocator
 import matplotlib.pyplot as plt
 import numpy as np
 
-from STSP import x_seq, n_method, LSTM_data
+from algorithm.LSTM import x_seq, n_method, LSTM_data
 from markov_model import markov_model, markov_data
 from svm_model import svm_data
 from nb_model import nb_data

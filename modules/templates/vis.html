@@ -960,6 +960,7 @@
                 type="month"
                 placeholder="Month"
                 size="mini"
+                default-value="2021-06"
                 @change="selectDate"
               >
               </el-date-picker>
@@ -1117,9 +1118,8 @@
                     <el-tooltip
                       class="item"
                       effect="dark"
-                      content="At least 10 nodes"
+                      content="Select 10 more nodes for better prediction"
                       placement="top-end"
-                      :disabled="!disabled"
                     >
                       <el-switch
                         v-model="engineOn"
@@ -1352,7 +1352,7 @@
       "white",
       { render: "svg" }
     );
-
+    
     chart4.setOption({
       title: {
         text: "User Behavior Vector",
@@ -3030,7 +3030,7 @@
       });
 
       // get ai prediction
-      if (selected_node_list.length > 8) {
+      if (selected_node_list.length > 0) {
         if (pred.disabled) {
           pred.$notify.info({
             title: "Tips",

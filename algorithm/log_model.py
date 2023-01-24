@@ -6,7 +6,7 @@ import joblib
 from sklearn.metrics import accuracy_score
 from random import randint
 
-from STSP import x_seq, n_method, x_steps, to_categorical
+from algorithm.LSTM import x_seq, n_method, x_steps, to_categorical
 
 def train():
   # Load the iris dataset
