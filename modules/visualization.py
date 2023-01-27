@@ -84,13 +84,13 @@ def find_mongodb():
     value = eval(request.form.get(key))
     if value != '':
       myquery[key] = value
-  print(myquery)
+  # print(myquery)
   mydoc = mydevices.find(myquery)
   devices = []
   for d in mydoc:
     d.pop("_id")
     devices.append(d)
-  print(devices)
+  # print(devices)
   return jsonify(result=devices)
 
 
@@ -384,20 +384,6 @@ def getdata_default():
     size = sqrt(node.get("count") * 10)
     nodes.append(opts.GraphNode(name=node.get("name"), symbol_size=size, value=node.get("count"),
                                 category=node.get("class")).opts)
-    # links.append(opts.GraphLink(source=node.get("name"), target=node.get("class"),
-    #                             value=node.get("count"),
-    #                             symbol='none').opts)
-
-  # for cat in categories:
-  #     total_value = 0
-  #     for methods in method_dict[cat].keys():
-  #         total_value += nodes_dict[methods].get("count")
-  # nodes.append(opts.GraphNode(name=cat,
-  #                             # symbol_size=len(method_dict[cat].keys()),
-  #                             symbol_size=3,
-  #                             value=sqrt(total_value*10),
-  #                             category=cat).opts)
-
   total_links_dict = {}
   for key in links_dict.keys():
     link = links_dict[key]
@@ -411,13 +397,9 @@ def getdata_default():
       total_links_dict[link_name] = {"source": source_clazz, "target": target_clazz, "count": count}
     else:
       total_links_dict[link_name]["count"] += count
-    # size = sqrt(sqrt(link.get("count")*50))
 
   for key in total_links_dict.keys():
     link = total_links_dict[key]
-    # links.append(opts.GraphLink(source=link.get("source"), target=link.get("target"),
-    #                             value=link.get("count"),
-    #                             symbol='none').opts)
   return jsonify({"links": links, "nodes": nodes, "seq": new_tlist, "tableData": tableData})
 
 
@@ -436,8 +418,6 @@ def getindexdata():
       tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
       tlist_T[1], START_METHOD)[int(index) + 1]
-  # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
-  # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
   tableData = []
   for i, t in enumerate(new_tlist):
@@ -591,8 +571,6 @@ def getinnerstatus():
       tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
       tlist_T[1], START_METHOD)[int(index) + 1]
-  # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
-  # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
   clazz_start = new_tlist[mindex_start][0]
   method_start = new_tlist[mindex_start][1].split("#")[0]
@@ -605,7 +583,6 @@ def getinnerstatus():
     if name == name_start and status == "End":
       mindex_end = i
   selected_tlist = new_tlist[mindex_start:mindex_end + 1]
-  print(mindex_start, mindex_end)
   tree = generate_tree(generate_treelist(selected_tlist))
   return jsonify(result=tree)
 
@@ -656,8 +633,6 @@ def getinnerstatusfortimeline():
       tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
       tlist_T[1], START_METHOD)[int(index) + 1]
-  # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
-  # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
   oritime = new_tlist[0][2]
   for i, new_t in enumerate(new_tlist):
@@ -666,7 +641,6 @@ def getinnerstatusfortimeline():
     if end_time + oritime == new_t[2]:
       mindex_end = i
   selected_tlist = new_tlist[mindex_start:mindex_end + 1]
-  print(mindex_start, mindex_end)
   tree = generate_tree(generate_treelist(selected_tlist))
   return jsonify(result=tree)
 
@@ -682,8 +656,6 @@ def gettimeline():
       tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
       tlist_T[1], START_METHOD)[int(index) + 1]
-  # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
-  # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
   oritime = new_tlist[0][2]
   depth_list = generate_depth(new_tlist)
@@ -713,12 +685,9 @@ def getinference():
       tlist_T[1], START_METHOD)[int(index)]
   new_index_end = get_index(
       tlist_T[1], START_METHOD)[int(index) + 1]
-  # new_index_start = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index)]
-  # new_index_end = get_index(tlist_T[1], 'initView(Landroid/os/Bundle;)V#Start')[int(index) + 1]
   new_tlist = tlist[new_index_start:new_index_end]
   selected_tlist = new_tlist[mindex_start - 14:mindex_start + 1]
   selected_tlist_T = list(map(list, zip(*selected_tlist)))
-  print(selected_tlist)
   x_input_data = []
   method_time = []
   timestamp = selected_tlist_T[2]
