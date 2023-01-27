@@ -84,13 +84,11 @@ def find_mongodb():
     value = eval(request.form.get(key))
     if value != '':
       myquery[key] = value
-  # print(myquery)
   mydoc = mydevices.find(myquery)
   devices = []
   for d in mydoc:
     d.pop("_id")
     devices.append(d)
-  # print(devices)
   return jsonify(result=devices)
 
 
@@ -486,7 +484,6 @@ def generate_treelist(seq):
       })
     if "#End" in c[1]:
       dep.append(d)
-      flag = True
       for node in reversed(tmp_stack):
         if node["name"] == name:
           tmp_tree.append({
@@ -499,16 +496,9 @@ def generate_treelist(seq):
           })
           tmp_stack.remove(node)
           d -= 1
-          flag = False
           break
         else:
           continue
-      if flag:
-        # print("_________")
-        # print(tmp_stack)
-        # print(c)
-        # print("_________")
-        pass
   tree_list = []
   # clear other threads function
   extra_indices = []
@@ -849,7 +839,7 @@ def getmethod():
               print(line.split(","))
               read_flag = True
         if read_flag:
-          # print(line)
+          print(line)
           tmp_str += line
         line = f.readline()
       f.close()
