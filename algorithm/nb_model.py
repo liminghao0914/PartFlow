@@ -8,11 +8,6 @@ from random import randint
 from algorithm.LSTM import x_seq, n_method, x_steps, to_categorical
 
 def train():
-  # Load the iris dataset
-  n_features = n_method * 2
-
-  # series_onehot = to_categorical(x_seq[:600], num_classes=n_features)
-  # series_onehot = series_onehot.reshape((len(series_onehot), n_features))
   series_onehot = x_seq
   # print(series_onehot.shape)
   # generate X and y
@@ -60,7 +55,7 @@ def get_accuracy(nb_model, x_seq, test_num, pred_step):
         y_pred = nb_model.predict(x_input_raw.reshape(1, -1))
         x_input_raw = np.delete(x_input_raw, 0)
         x_input_raw = np.append(x_input_raw, y_pred)
-      # print('y_pred: ', y_pred, 'y_label: ', y_label, 'x_input_raw: ' ,x_input_raw)
+        
       if y_label == y_pred:
         n_acc += 1
   print('nb_Accuracy: ', n_acc / test_num)

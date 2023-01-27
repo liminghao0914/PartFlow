@@ -9,11 +9,6 @@ from random import randint
 from algorithm.LSTM import x_seq, n_method, x_steps, to_categorical
 
 def train():
-  # Load the iris dataset
-  n_features = n_method * 2
-
-  # series_onehot = to_categorical(x_seq[:600], num_classes=n_features)
-  # series_onehot = series_onehot.reshape((len(series_onehot), n_features))
   series_onehot = x_seq
   # print(series_onehot.shape)
   # generate X and y
@@ -28,11 +23,9 @@ def train():
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
   print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
 
-  # Create a Random Forest classifier
-  # rfc = RandomForestClassifier(n_estimators=2000, max_depth=2, random_state=42)
+  # Create a Logistic Regression classifier
   reg = LogisticRegression(random_state=42, solver='lbfgs', multi_class='auto')
   # Train the classifier on the training data
-  # rfc.fit(X_train, y_train)
   reg.fit(X_train, y_train)
   # Test the classifier on the test data
   y_pred = reg.predict(X_test)
@@ -61,7 +54,7 @@ def get_accuracy(log_model, x_seq, test_num, pred_step):
         y_pred = log_model.predict(x_input_raw.reshape(1, -1))
         x_input_raw = np.delete(x_input_raw, 0)
         x_input_raw = np.append(x_input_raw, y_pred)
-      # print('y_pred: ', y_pred, 'y_label: ', y_label, 'x_input_raw: ' ,x_input_raw)
+        
       if y_label == y_pred:
         n_acc += 1
   print('log_Accuracy: ', n_acc / test_num)

@@ -9,14 +9,7 @@ from random import randint
 from algorithm.LSTM import x_seq, n_method, x_steps, to_categorical
 
 def train():
-  # Load the iris dataset
-  # iris = load_iris()
-  # X, y = iris.data, iris.target
-  n_features = n_method * 2
-
-  # series_onehot = to_categorical(x_seq[:600], num_classes=n_features)
-  # series_onehot = series_onehot.reshape((len(series_onehot), n_features))
-  series_onehot = x_seq[:30000]
+  series_onehot = x_seq
   # print(series_onehot.shape)
   # generate X and y
   X = []
@@ -31,31 +24,16 @@ def train():
   print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
 
   # Create an SVM model with a linear kernel
-  # svm = SVC(kernel='linear')
   svm = SVC(kernel='rbf', C=10000, gamma=1, tol=1e-3, max_iter=10000, decision_function_shape='ovr')
-
-  # Create a logistic regression model
-  # clf = LogisticRegression(random_state=42, solver='lbfgs', multi_class='auto')
 
   # Train the model on the training data
   svm.fit(X_train, y_train)
-
-  # # Train the model on the training data
-  # clf.fit(X_train, y_train)
 
   # Test the model on the test data
   y_pred = svm.predict(X_test)
   
   accuracy = accuracy_score(y_pred, y_test)
   print(f'Test accuracy: {accuracy:.2f}')
-
-  # # Test the model on the test data
-  # y_pred = clf.predict(X_test)
-
-  # print(y_pred[0], y_test[0], X_test[0], X_test[1])
-  # # Evaluate the model's performance
-  # from sklearn.metrics import accuracy_score
-  # print("Accuracy:", accuracy_score(y_test, y_pred))
 
   # Save the model to a file
   joblib.dump(svm, 'svm.joblib')
@@ -79,7 +57,7 @@ def get_accuracy(svm_model, x_seq, test_num, pred_step):
         y_pred = svm_model.predict(x_input_raw.reshape(1, -1))
         x_input_raw = np.delete(x_input_raw, 0)
         x_input_raw = np.append(x_input_raw, y_pred)
-      # print('y_pred: ', y_pred, 'y_label: ', y_label, 'x_input_raw: ' ,x_input_raw)
+        
       if y_label == y_pred:
         n_acc += 1
   print('svm_Accuracy: ', n_acc / test_num)

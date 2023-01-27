@@ -211,37 +211,24 @@ def train(series, n_input, n_method):
   # one hot
   # num_classes needs to be unified
   series_onehot = to_categorical(series[:59566], num_classes=n_method * 2)
-  # x_onehot = to_categorical(x_user, num_classes=n_method * 2)
-  # The markov set
-  # series_set = get_next(series, x_user)
+
   # output class
   n_features = n_method * 2
-  # n_features = 1
+
   # input data
   series_onehot = series_onehot.reshape((len(series_onehot), n_features))
-  print(series_onehot.shape)
-  # series = series.reshape((len(series), -1))
-  # print(len(series))
-  # Generator Shape [(series_length - length)/batch, 2, batch size, length, onehot]
   generator = TimeseriesGenerator(series_onehot, series_onehot, length=n_input, batch_size=128)
-  # test
-  # x = generator[0][0]
-  # for i in x:
-  #     print(np.argmax(i, axis=1))
-  # y = np.argmax(generator[0][1], axis=1)
-  # print(y)
 
   # define model
   meta_model = Model(n_input, n_features)
 
   # sequenctial model
   model = meta_model.lstm_net()
-  # model = multi_gpu_model(model, 2)
   print(model.summary())
+
   # optimizer
   model.compile(optimizer='adam', loss='cosine_similarity', metrics=['accuracy'])
   # fit model
-  # model.fit(X, y, nb_epoch=500, batch_size=1, verbose=2)
   model.fit_generator(generator, epochs=10, verbose=1)
   # save model
   model.save("LSTM_v2")
@@ -259,7 +246,6 @@ def train_temp(series, time, n_input, n_method):
   meta_model = Model(n_input, n_features)
   # sequenctial model
   model = meta_model.temporal_net()
-  # model = multi_gpu_model(model, 2)
   # use gpus
   print(model.summary())
   model.compile(optimizer='adam', loss='huber', metrics=['mean_squared_logarithmic_error'])
@@ -268,7 +254,6 @@ def train_temp(series, time, n_input, n_method):
 
 
 def predict(n_input, n_features, model, x_input_raw):
-  # print("y_label: " + str(y_label))
   x_onehot = to_categorical(x_input_raw, num_classes=n_features)
   # make a one step prediction out of sample
   x_input = np.array(x_onehot).reshape((1, n_input, n_features))
@@ -282,10 +267,8 @@ def predict(n_input, n_features, model, x_input_raw):
 def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, pred_step):
   print("len(series): " + str(len(series)))
   model = keras.models.load_model(model_path)
-  # print(model.summary())
   model_tmp = keras.models.load_model(model_path_tmp)
-  # print(model_tmp.summary())
-  # n_input = len(x_user)
+
   flag = True
   n_features = n_method * 2
   n_acc = 0
@@ -325,13 +308,13 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
     # raw prediction index
     yhat_tmp = model_tmp.predict(x_input_tmp, verbose=0)
     y_value_tmp = np.squeeze(yhat_tmp)
-    # TODO ReLu needs
+
     if y_value_tmp < 0:
       y_value_tmp = 0
     msle = mean_squared_log_error([[y_label_tmp]], [[y_value_tmp]])
     t_msle += msle
 
-    # 显示
+    # print result
     y_pred_funcname = sequence_decoder([y_value])
     y_label_funcname = sequence_decoder([y_label])
     x_input_funcname = sequence_decoder(x_input_raw)
@@ -353,10 +336,7 @@ def test(model_path, model_path_tmp, series, time, n_input, n_method, test_num, 
 
 def get_accuracy(model_path, model_path_tmp, series, n_input, n_method, test_num, pred_step):
   model = keras.models.load_model(model_path)
-  # print(model.summary())
   model_tmp = keras.models.load_model(model_path_tmp)
-  # print(model_tmp.summary())
-  # n_input = len(x_user)
   flag = True
   n_features = n_method * 2
   n_acc = 0
