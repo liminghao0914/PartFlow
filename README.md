@@ -84,8 +84,8 @@ After installation, we can easily run the system by
     
 ## Examples
 Watch the two videos below to gain the basic capacity and functionality of PartFlow:
-- Implementation of PartFlow_v1 (noted that it is the old version, for reference only.): [https://youtu.be/mtjek9mmNbc](https://youtu.be/mtjek9mmNbc)
-- Dynamic Mode: [https://youtu.be/6Xyl2Uq_54U](https://youtu.be/6Xyl2Uq_54U)
+- Implementation of PartFlow_v1 (The old version, for reference only.): [https://youtu.be/mtjek9mmNbc](https://youtu.be/mtjek9mmNbc)
+- Dynamic Mode (The old function of v1, for reference only.): [https://youtu.be/6Xyl2Uq_54U](https://youtu.be/6Xyl2Uq_54U)
 
 ## Screenshots
 Here's the screenshot of PartFlow. To conviently gain the overview, PartFlow will be launched with a default graph.
