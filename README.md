@@ -25,7 +25,7 @@ If you want a quick start without any environment issue, please download this VM
 
 By using this image, you will get a smooth experience on using PartFlow without any configuration and input-command. 
 
-If PartFlow does not start up after login, please refer to troubleshooting for more information. Thank you for your time.
+If PartFlow does NOT **automatically start up** after login, please refer to [troubleshooting](#troubleshooting) for more information. Thank you for your time.
 
 If you want to deploy the system in your own local environment, please read the following context. (only for Liux)
 
