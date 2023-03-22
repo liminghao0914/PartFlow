@@ -18,7 +18,7 @@ This software, PartFlow, is designed to support the analysis of components in mo
     git clone https://github.com/liminghao0914/PartFlow.git
 
 ## Quick Start (Recommended)
-If you want a quick start without any environment issue, please download this VM image [here](https://entuedu-my.sharepoint.com/:f:/g/personal/minghao002_e_ntu_edu_sg/Ekdvu5361TlGpSUhCfMaLO4BvvM2i9bbpoUvHwCvO2_gGw?e=cTNENa).
+If you want a quick start without any environment issue, please download this VM image [here](https://entuedu-my.sharepoint.com/:f:/g/personal/minghao002_e_ntu_edu_sg/EnWamG9OIQ5Gm9DAYizdTrwBEVp0d7aM4XXT1RsYBy202g?e=0sRxVw).
 
     [LOGIN PWD]: thms2023
 
