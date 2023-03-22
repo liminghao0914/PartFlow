@@ -20,8 +20,7 @@ This software, PartFlow, is designed to support the analysis of components in mo
 ## Quick Start (Recommended)
 If you want a quick start without any environment issue, please download this VM image [here](https://entuedu-my.sharepoint.com/:f:/g/personal/minghao002_e_ntu_edu_sg/Ekdvu5361TlGpSUhCfMaLO4BvvM2i9bbpoUvHwCvO2_gGw?e=cTNENa).
 
-    [LOGIN PWD]: mmsys
-    [ROOT PWD]: mmsys
+    [LOGIN PWD]: thms2023
 
 By using this image, you will get a smooth experience on using PartFlow without any configuration and input-command. 
 
