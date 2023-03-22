@@ -66,7 +66,7 @@ All dependencies are imported by static files. To set up the PartFlow system, we
 
 To set up and use a virtual environment for PartFlow, follow these instructions:
 
-1. Activate the virtual environment by running `source env_mmsys/bin/activate`.
+1. Activate the virtual environment by running `source venv/bin/activate`.
 
 2. Same as the previous instruction, install the required packages by running `pip install -r requirements.txt`. This will install all the packages listed in the `requirements.txt` file.
 
